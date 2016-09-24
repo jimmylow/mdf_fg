@@ -145,7 +145,6 @@ while ($row=mysql_fetch_array($result)) {
 	{ 
 		
           $approot1 = substr(dirname(__FILE__),strlen($_SERVER['DOCUMENT_ROOT'])); 
-		  	  echo $approot1;
           $approot = str_replace('\\', '/', $approot1); 
          
 	

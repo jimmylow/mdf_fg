@@ -199,6 +199,7 @@
 
 
 <script type="text/javascript"> 
+
 $(document).ready(function(){
 	var ac_config = {
 		source: "autocomscrpro1.php",
@@ -212,6 +213,29 @@ $(document).ready(function(){
 		
 	};
 	$("#prod_code").autocomplete(ac_config);
+
+	/* var rowIndex = 0;
+	$("#itemsTable tr").click(function(){
+		var value=$(this).index();
+	   	//alert(value); 
+	   	rowIndex = value;
+	   	//alert(rowIndex);
+	});
+
+	$("#deleteRow").click(function(){
+		try {
+			var table = document.getElementById("itemsTable");
+			var rowCount = rowIndex+1; //table.rows.length-1;
+			//alert(rowIndex);
+	        if (rowCount > 2){
+	             table.deleteRow(rowCount);
+	        }else{
+	             alert ("No More Row To Remove");
+	        }
+		}catch(e) {
+			alert(e);
+		}
+	}); */
 });
 
 function upperCase(x)
@@ -428,8 +452,7 @@ function validateForm()
 function deleteRow(tableID) {
 	try {
 		var table = document.getElementById(tableID);
-		var rowCount = table.rows.length;
-         
+		var rowCount = table.rows.length-1;
         if (rowCount > 2){
              table.deleteRow(rowCount - 1);
         }else{
@@ -438,7 +461,6 @@ function deleteRow(tableID) {
 	}catch(e) {
 		alert(e);
 	}
-
 }
 
 
@@ -633,7 +655,6 @@ function getbal (str) {
 			<td style="width: 284px">
 		   <input class="inputtxt" name="saorddte" id ="saorddte" type="text" style="width: 128px;" value="<?php  echo $vmorddte; ?>">
 		   <img alt="Date Selection" src="../images/cal.gif" onclick="javascript:NewCssCal('saorddte','ddMMyyyy')" style="cursor:pointer"></td>
-		   </td>
 	  	  </tr>  
 	  	  <tr>
 	  	   <td style="width: 13px"></td>
@@ -687,8 +708,7 @@ function getbal (str) {
                     
 	         ?>				   
 	       </select>         
-			<input class="inputtxt" name="lessamt" id="lessamtid" type="text" maxlength="10" style="width: 50px;text-align : right" value="<?php echo $vmlessamt; ?>"></td>		   
-		     </td>
+			<input class="inputtxt" name="lessamt" id="lessamtid" type="text" maxlength="10" style="width: 50px;text-align : right" value="<?php echo $vmlessamt; ?>"></td>		   	
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px">&nbsp;</td>
 		   <td>&nbsp;</td>
@@ -861,17 +881,17 @@ function getbal (str) {
                 <td>
        			<input name="opening[]1" id="opening<?php echo $i; ?>" readonly="readonly" style="width: 48px; text-align : right" value ="<?php echo $rowq['endbal']; ?>" size="20"> </td>
                 <td>
-				<input name="procodoqty[]1" id="procodoqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $doqty; ?>" size="20"> </td>
+				<input name="procodoqty[]1" id="procodoqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $doqty; ?>" onBlur="getbal(<?php echo $i; ?>)" size="20"> </td>
                 <td>
-        <input name="procosoldqty[]1" class="tInput" id="procosoldqty<?php echo $i; ?>" style="width: 48px; text-align : right"  value ="<?php echo $var_soldqty; ?>" onBlur="getamt(<?php echo $i; ?>)" size="20"></td>                
+        <input name="procosoldqty[]1" class="tInput" id="procosoldqty<?php echo $i; ?>" style="width: 48px; text-align : right"  value ="<?php echo $var_soldqty; ?>" onBlur="getamt(<?php echo $i; ?>); getbal(<?php echo $i; ?>);" size="20"></td>                
                 <td>
         <input name="procosamt[]1" class="tInput" id="procosamt<?php echo $i; ?>" style="border-style: none; width: 48px; text-align : right" readonly="readonly" value ="<?php echo $var_salesamt; ?>" size="20"></td>                
                 <td>
-        <input name="procortnqty[]1" class="tInput" id="procortnqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_rtnqty; ?>" size="20"></td>                
+        <input name="procortnqty[]1" class="tInput" id="procortnqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_rtnqty; ?>" onBlur="getbal(<?php echo $i; ?>)" size="20"></td>                
                 <td>
-        <input name="procoshortqty[]1" class="tInput" id="procoshortqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_shortqty; ?>" size="20"></td>                
+        <input name="procoshortqty[]1" class="tInput" id="procoshortqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_shortqty; ?>" onBlur="getbal(<?php echo $i; ?>)" size="20"></td>                
                 <td>
-        <input name="procooverqty[]1" class="tInput" id="procooverqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_overqty; ?>" size="20"></td>                
+        <input name="procooverqty[]1" class="tInput" id="procooverqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_overqty; ?>" onBlur="getbal(<?php echo $i; ?>)" size="20"></td>                
                 <td>
         <input name="procoadjqty[]1" class="tInput" id="procoadjqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_adjqty; ?>" onBlur="getbal(<?php echo $i; ?>)" size="20"></td>                
                 <td>
@@ -900,18 +920,17 @@ function getbal (str) {
                 <td>
 				<input name="opening[]" id="opening<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $begbal; ?>" ></td>
                 <td>
-				<input name="procodoqty[]" id="procodoqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $doqty; ?>" ></td>
-					 </td>
+				<input name="procodoqty[]" id="procodoqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $doqty; ?>" onBlur="getbal(<?php echo $i; ?>)"></td>					
                 <td>
-        <input name="procosoldqty[]" class="tInput" id="procosoldqty<?php echo $i; ?>" style="width: 48px; text-align : right"  value ="<?php echo $var_soldqty; ?>" onBlur="getamt(<?php echo $i; ?>)"></td>                
+        <input name="procosoldqty[]" class="tInput" id="procosoldqty<?php echo $i; ?>" style="width: 48px; text-align : right"  value ="<?php echo $var_soldqty; ?>" onBlur="getamt(<?php echo $i; ?>); getbal(<?php echo $i; ?>)"></td>                
                 <td>
         <input name="procosamt[]" class="tInput" id="procosamt<?php echo $i; ?>" style="border-style: none; width: 48px; text-align : right" readonly="readonly" value ="<?php echo $var_salesamt; ?>"></td>                
                 <td>
-        <input name="procortnqty[]" class="tInput" id="procortnqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_rtnqty; ?>"></td>                
+        <input name="procortnqty[]" class="tInput" id="procortnqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_rtnqty; ?>" onBlur="getbal(<?php echo $i; ?>)"></td>                
                 <td>
-        <input name="procoshortqty[]" class="tInput" id="procoshortqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_shortqty; ?>"></td>                
+        <input name="procoshortqty[]" class="tInput" id="procoshortqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_shortqty; ?>" onBlur="getbal(<?php echo $i; ?>)"></td>                
                 <td>
-        <input name="procooverqty[]" class="tInput" id="procooverqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_overqty; ?>"></td>                
+        <input name="procooverqty[]" class="tInput" id="procooverqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_overqty; ?>" onBlur="getbal(<?php echo $i; ?>)"></td>                
                 <td>
         <input name="procoadjqty[]" class="tInput" id="procoadjqty<?php echo $i; ?>" style="width: 48px; text-align : right" value ="<?php echo $var_adjqty; ?>" onBlur="getbal(<?php echo $i; ?>)"></td>                
                 <td>
@@ -920,7 +939,7 @@ function getbal (str) {
 		  <?php
             }
           ?>       
-            
+           </tbody> 
     <!--      <tr class="item-row">
                 <td style="width: 30px">
 				<input name="seqno[]" id="seqno" value="1" readonly="readonly" style="width: 27px; border:0;"></td>
@@ -948,15 +967,15 @@ function getbal (str) {
 				<input name="procototpcs[]" id="procototpcs1" style="border-style: none; width: 48px; text-align : right" readonly></td>        
              </tr>
              -->
- 
-          <tr >
+ 		  <tfoot>
+          <tr>
           <td colspan="7" style = "border-top : 1px dotted; border-bottom : 1px dotted;" align="right">Total :</td>
           <td style = "border-top : 1px dotted; border-bottom : 1px dotted;" align="right">
 				  <input name="gtot" id="gtot" class="tInput" readonly="readonly" style="border-style: none; border-color: inherit; border-width: 0; width: 48px; text-align : right" value ="<?php echo $rowq['sprounipri']; ?>"></td>
-          </td>
-           <td colspan="5" style = "border-top : 1px dotted; border-bottom : 1px dotted;" align="right">&nbsp;</td>
-          </tr>             
-            </tbody>
+          <td colspan="5" style = "border-top : 1px dotted; border-bottom : 1px dotted;" align="right">&nbsp;</td>
+          </tr>    
+          </tfoot>         
+            
            </table>
            
      <br /><br />

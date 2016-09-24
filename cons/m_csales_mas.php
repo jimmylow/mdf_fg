@@ -70,7 +70,7 @@
        $var_tyear = $_POST['tyear'];
    }
    
-   if ($var_fyear == "") { $var_fyear = date(Y) - 1; }
+   if ($var_fyear == "") { $var_fyear = date(Y); }
    if ($var_tyear == "") { $var_tyear = date(Y); }    
 
 ?>

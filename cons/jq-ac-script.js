@@ -33,8 +33,8 @@ $(document).ready(function(){
     // Add row to list and allow user to use autocomplete to find items.
     $("#addRow").bind('click',function(){
     	var table = document.getElementById('itemsTable');
-	    var rowCount = table.rows.length; 
-
+	    var rowCount = table.rows.length-1; 
+	    
     	 // Create an Array to for the table row. ** Just to make things a bit easier to read.
     var idprococode = "prococode"+rowCount;
     var idprocoupri = "procoupri"+rowCount;
@@ -57,13 +57,13 @@ $(document).ready(function(){
             '<td><input name="procoupri[]" value="" class="tInput" id="'+idprocoupri+'" style="width: 60px" ></td>',
             '<td><input name="procotype[]" value="" class="tInput" id="'+idprocotype+'" style=" width: 48px" onchange ="upperCase(this.id)"></td>',
             '<td><input name="opening[]" value="" class="tInput" id="'+idopening+'" style="width: 48px; text-align : right"></td>',
-            '<td><input name="procodoqty[]" value="" class="tInput" id="'+idprocodoqty+'" style="width: 48px; text-align : right" ></td>',
-            '<td><input name="procosoldqty[]" value="" class="tInput" id="'+idprocosoldqty+'" style="width: 48px; text-align : right" onBlur="getamt('+rowCount+');" >',
+            '<td><input name="procodoqty[]" value="" class="tInput" id="'+idprocodoqty+'" style="width: 48px; text-align : right" onBlur="getbal('+rowCount+');"></td>',
+            '<td><input name="procosoldqty[]" value="" class="tInput" id="'+idprocosoldqty+'" style="width: 48px; text-align : right" onBlur="getamt('+rowCount+'); getbal('+rowCount+');" >',
             '<input type="hidden" value="" id="'+idbegbal+'" ></td>',
             '<td><input name="procosamt[]" value="" class="tInput" id="'+idprocosamt+'" style="border-style: none; border-color: inherit; border-width: 0; width: 48px; text-align : right" readonly="readonly"></td>',
-            '<td><input name="procortnqty[]" value="" class="tInput" id="'+idprocortnqty+'" style="width: 48px; text-align : right"></td>',
-            '<td><input name="procoshortqty[]" value="" class="tInput" id="'+idprocoshortqty+'" style="width: 48px; text-align : right"></td>',
-            '<td><input name="procooverqty[]" value="" class="tInput" id="'+idprocooverqty+'" style="width: 48px; text-align : right"></td>',
+            '<td><input name="procortnqty[]" value="" class="tInput" id="'+idprocortnqty+'" style="width: 48px; text-align : right" onBlur="getbal('+rowCount+');"></td>',
+            '<td><input name="procoshortqty[]" value="" class="tInput" id="'+idprocoshortqty+'" style="width: 48px; text-align : right" onBlur="getbal('+rowCount+');"></td>',
+            '<td><input name="procooverqty[]" value="" class="tInput" id="'+idprocooverqty+'" style="width: 48px; text-align : right" onBlur="getbal('+rowCount+');"></td>',
             '<td><input name="procoadjqty[]" value="" class="tInput" id="'+idprocoadjqty+'" style="width: 48px; text-align : right"  onBlur="getbal('+rowCount+');"></td>',
             '<td><input name="procobalqty[]" value="" class="tInput" id="'+idprocobalqty+'" style="border-style: none;width: 48px; text-align : right" readonly="readonly"></td>',
         '</tr>'

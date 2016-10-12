@@ -558,21 +558,25 @@ function getamt (str) {
  var totamt = soldqty * price; 
     
  document.getElementById("procosamt"+str).value = totamt.toFixed(2);
- 
-  var gtot = 0;   
-  var rowcnt = parseInt(str);
-  
-	for (var j = 1; j <= rowcnt; j++){
+ getTotalAmt();
+}
 
+function getTotalAmt() {
+	var gtot = 0;   
+	var table = document.getElementById('itemsTable');
+	var rowCount = table.rows.length-1;  
+	for (var j = 1; j <= rowCount; j++){
 	    var idsubamt = "procosamt"+j;
-        var subamt = document.getElementById(idsubamt).value;	
-        if (subamt != ""){ 
-          subamt = parseFloat(subamt); 
-        	gtot = gtot + subamt;   
+        var subamtobj = document.getElementById(idsubamt);
+        if (subamtobj) {
+        	var subamt = subamtobj.value;
+        	if (subamt !== "") { 
+          		subamt = parseFloat(subamt); 
+        		gtot = gtot + subamt; 
+        	}
 	    }		
     }	
     document.getElementById("gtot").value = gtot.toFixed(2);
- 
 }
 
 function getbal (str) {
@@ -598,7 +602,10 @@ function getbal (str) {
   if (isNaN(adjqty)) { adjqty = 0; }
   
   var endbal = opening + doqty - soldqty - rtnqty - shortqty + overqty + adjqty;
- document.getElementById("procobalqty"+str).value = endbal;
+  var endbalobj = document.getElementById("procobalqty"+str);
+  if (endbalobj) {
+	  endbalobj.value = endbal;
+  }
  
 }
 

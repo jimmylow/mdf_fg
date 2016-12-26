@@ -24,8 +24,10 @@
 	$var_server = '127.0.0.1:3306';
 	$var_userid = 'root';
 	$var_password = 'root';
-	$var_db_name='fnl_fgood'; 
+	$var_db_name='mdf_fgood_jimmy'; 
 	
-  $varrpturldb = "jdbc:mysql://".$var_server."/".$var_db_name; 
+  	$varrpturldb = "jdbc:mysql://".$var_server."/".$var_db_name; 
+  
+  	ini_set('max_execution_time', 0);
     
 ?>

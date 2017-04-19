@@ -25,14 +25,13 @@
      	{
            foreach($_POST['salorno'] as $key) {
              $defarr = explode(",", $key);
-             print_r($defarr);
+             //print_r($defarr);
              $var_sale = $defarr[0];
              $var_cust = $defarr[2];
                         
 		     $vartoday = date("Y-m-d H:i:s");
 			 $sql  = "Update salesentry Set stat = 'C', modified_by = '$var_loginid', modified_on = '$vartoday' ";
              $sql .=	" Where sordno ='".$var_sale."' And scustcd='".$var_cust."'";
-             //echo $sql;
              mysql_query($sql) or die(mysql_error()." 1");		 	 
 		   }
 		   $backloc = "../sales/m_sales_mas.php?stat=1&menucd=".$var_menucode;
@@ -195,7 +194,16 @@ jQuery(function($) {
   				}else{
    					echo '<input type=submit name = "Submit" value="Active" class="butsub" style="width: 60px; height: 32px" onclick="return confirm(\''.$msgdel.'\')">';
   				}
-
+  				$locatr = "vm_saleentry.php?menucd=".$var_menucode;
+  				if ($var_accvie != 0){
+  					echo '<input type="button" value="View" class="butsub" style="width: 60px; height: 32px" onclick="location.href=\''.$locatr.'\'" >';
+  				}
+  				$locatr = "upd_saleentry.php?menucd=".$var_menucode;
+  				if ($var_accupd != 0){
+  					echo '<input type="button" value="Edit" class="butsub" style="width: 60px; height: 32px" onclick="location.href=\''.$locatr.'\'" >';
+  				}
+  				$locatr = "m_sales_mas.php?menucd=".$var_menucode;
+  				echo '<input type="submit" name="btnListing" id="btnListing" value="Listing" class="butsub" style="width: 60px; height: 32px">';
     	      ?></td>
 		 </tr>
 		 </table>
@@ -233,6 +241,7 @@ jQuery(function($) {
          </thead>
 		 <tbody>
 		 <?php 
+		 if ($_POST['btnListing'] == "Listing") {
 		    $sql = "SELECT sordno, sorddte, scustcd, scustpo, stat, shipflg ";
 		    $sql .= " FROM salesentry";
     		$sql .= " ORDER BY sordno desc";  
@@ -316,6 +325,7 @@ jQuery(function($) {
            		echo '</tr>';
             $numi = $numi + 1;
 			}
+		 }
 		 ?>
 		 </tbody>
 		 </table>

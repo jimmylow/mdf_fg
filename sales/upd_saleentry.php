@@ -20,6 +20,10 @@
 
     }
     
+    if ($_POST['Submit'] == "Get" && !empty($_POST['sordno'])) {
+    	$var_ordno= $_POST['sordno'];
+    }
+    
  if(isset($_POST['UpdHeader'])) {
   if($_POST['UpdHeader'] == "Upd_Header") {
     
@@ -446,14 +450,13 @@ function validateForm2()
 	alert("Customer Must Not Be Blank");
 	document.InpPO.sacustcd.focus;
 	return false;
-	}
-
-   var x=document.forms["InpPO2"]["saorddte"].value;
+	}		
+    var x=document.forms["InpPO2"]["saorddte"].value;
 	if (x==null || x=="")
 	{
-	alert("Order Date Must Not Be Blank");
-	document.getElementById("saorddte").focus();
-	return false;
+	//alert("Order Date Must Not Be Blank");
+	//document.getElementById("saorddte").focus();
+	//return false;
 	}
 }
 
@@ -534,26 +537,43 @@ function get_totpcs ( ) {
 <!--  <?php include("../sidebarm.php"); ?> -->
 
   <?php
+  if (!empty($var_ordno)) {
   	 $sql = "select * from salesentry";
      $sql .= " where sordno ='".$var_ordno."'";
      $sql_result = mysql_query($sql);
      $row = mysql_fetch_array($sql_result);
-
-     $custcd = $row['scustcd'];
-     $orddte = date('d-m-Y', strtotime($row['sorddte']));
-     $order_no = htmlentities($row['sordno']);
-     $cust_po = htmlentities($row['scustpo']);
-     $remark = $row['remark'];
+     $num=mysql_numrows($sql_result);
+     if ($num==0) {
+     	echo "<script>";
+     	echo "alert('Order No ".$var_ordno. " not exist at SALES ORDER!')";
+     	echo "</script>";
+     }
      
-     $sql = "SELECT y.zone_desc FROM customer_master x, zone_master y ";
-     $sql .= " where x.custno = '".$custcd."'";
-     $sql .= " and y.zone_code = x.zone ";
-
-     $result = mysql_query($sql) or die ("Error : ".mysql_error());
-     $data = mysql_fetch_object($result);
-
-     $zone = $data->zone_desc; 
+     $shipflg = $row['shipflg'];
      
+     if ($shipflg=="Y") {
+     	echo "<script>";
+     	echo "alert('Order No ".$var_ordno. " Shipment Is Created; Edit Is Not Allow')";
+     	echo "</script>";
+     	$var_ordno = "";
+     }
+     else {
+	     $custcd = $row['scustcd'];
+	     $orddte = date('d-m-Y', strtotime($row['sorddte']));
+	     $order_no = htmlentities($row['sordno']);
+	     $cust_po = htmlentities($row['scustpo']);
+	     $remark = $row['remark'];
+     
+	     $sql = "SELECT y.zone_desc FROM customer_master x, zone_master y ";
+	     $sql .= " where x.custno = '".$custcd."'";
+	     $sql .= " and y.zone_code = x.zone ";
+	
+	     $result = mysql_query($sql) or die ("Error : ".mysql_error());
+	     $data = mysql_fetch_object($result);
+	
+	     $zone = $data->zone_desc; 
+     }
+  }
   ?> 
   
   <div class="contentc">
@@ -570,7 +590,8 @@ function get_totpcs ( ) {
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="textnoentry" name="sordno" id="sordnoid" type="text" readonly style="width: 204px;" value = "<?php echo $order_no; ?>">         
+			<input class="textnoentry" name="sordno" id="sordno" type="text" style="width: 150px;" value = "<?php echo $order_no; ?>"> 
+			<input type=submit name = "Submit" value="Get" class="butsub" style="width: 60px; height: 32px" >        
 		   </td>
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px">&nbsp;</td>
@@ -609,7 +630,6 @@ function get_totpcs ( ) {
 			<td style="width: 284px">
 		   <input class="inputtxt" name="saorddte" id ="saorddte" type="text" style="width: 128px;" value="<?php  echo $orddte; ?>">
 		   <img alt="Date Selection" src="../images/cal.gif" onclick="javascript:NewCssCal('saorddte','ddMMyyyy')" style="cursor:pointer"></td>
-		   </td>
 	  	  </tr>  
 	  	  <tr>
 	  	   <td style="width: 13px"></td>
@@ -729,7 +749,7 @@ function get_totpcs ( ) {
               </td>              
              </tr>            
              <?php
-             
+             if (!empty($var_ordno)) {
              	$sql = "SELECT * FROM salesentrydet";
              	$sql .= " Where sordno ='".$var_ordno."'"; 
 	    	      $sql .= " ORDER BY sprocd";  
@@ -784,6 +804,7 @@ function get_totpcs ( ) {
                 	$i = $i + 1;          
           
              } // while
+             }
           ?>     
             </tbody>
            </table>
@@ -792,13 +813,13 @@ function get_totpcs ( ) {
       <table class="general-table">
       <thead>
       <tr>
-      <th class="tabheader" colspan="4">View Discount
-      			<input name="sordno" type="hidden"  value = "<?php echo $order_no; ?>">         
+      <th class="tabheader" colspan="4">View Discount       
       </th>
       </tr>
       </thead>
       <tbody>
       <?php
+      if (!empty($var_ordno)) {
         $sql = "select distinct (sptype) as disctype from salesentrydet";
         $sql .= " Where sordno ='".$var_ordno."'";
       
@@ -836,7 +857,7 @@ function get_totpcs ( ) {
           
           }
         }
-      
+      }
       ?>      
       
       </tbody>      

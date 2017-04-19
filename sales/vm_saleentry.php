@@ -18,10 +18,13 @@
       $var_ordno = $_GET['sorno'];
       include("../Setting/ChqAuth.php");
     }
-    
-    
-    if (isset($_POST['Submit'])){ 
-     if ($_POST['Submit'] == "Print") {
+   
+   if ($_POST['Submit'] == "Get" && !empty($_POST['sordno'])) {
+    	$var_ordno= $_POST['sordno'];
+   }
+   
+   if (isset($_POST['Submit'])){
+    if ($_POST['Submit'] == "Print") {
         $pdordno = $_POST['sordno'];
         
         $fname = "salesform.rptdesign&__title=myReport"; 
@@ -35,10 +38,8 @@
        	echo "<script>";
        	echo 'location.replace("'.$backloc.'")';
         echo "</script>"; 
-
-     }
-    } 
-
+    }
+   }
 ?>
 
 
@@ -78,11 +79,18 @@
 <body>
  
   <?php
+  if (!empty($var_ordno)) {
   	 $sql = "select * from salesentry";
      $sql .= " where sordno ='".$var_ordno."'";
      $sql_result = mysql_query($sql);
      $row = mysql_fetch_array($sql_result);
-
+     $num=mysql_numrows($sql_result);
+	 if ($num==0) {
+		echo "<script>";
+		echo "alert('Order No ".$var_ordno. " not exist at SALES ORDER!')";
+		echo "</script>";
+     }
+         
      $custcd = $row['scustcd'];
      $orddte = date('d-m-Y', strtotime($row['sorddte']));
      $order_no = htmlentities($row['sordno']);
@@ -97,7 +105,7 @@
      $data = mysql_fetch_object($result);
 
      $zone = $data->zone_desc;
-          
+  }
   ?> 
    
   <div class="contentc">
@@ -113,7 +121,8 @@
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="inputtxt" name="sordno" id="sordnoid" type="text" readonly style="width: 204px;" value = "<?php echo $order_no; ?>">         
+			<input class="inputtxt" name="sordno" id="sordno" type="text" style="width: 150px;" value = "<?php echo $order_no; ?>"> 
+			<input type=submit name = "Submit" value="Get" class="butsub" style="width: 60px; height: 32px" >        
 		   </td>
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px">&nbsp;</td>
@@ -172,7 +181,6 @@
 	  	   <td >:</td>
 	  	   <td colspan="5">
 			<input class="inputtxt" name="saremark" id="saremarkid" type="text" maxlength="100" style="width: 463px;" value="<?php echo $remark; ?>" readonly></td>
-		     </td>
 	  	  </tr>		
 	  	  </table>
 		 
@@ -194,6 +202,7 @@
             </thead>
             <tbody>
              <?php
+             if (!empty($var_ordno)) {
              	$sql = "SELECT * FROM salesentrydet";
              	$sql .= " Where sordno ='".$var_ordno."'"; 
 	    		$sql .= " ORDER BY sproseq";  
@@ -230,7 +239,7 @@
              
              $var_ship = $var_ship * $var_uqty;
              $var_bal = $var_totpcs - $var_ship;
-                                    
+		                          
              ?>            
              <tr class="item-row">
                 <td style="width: 30px">
@@ -260,6 +269,7 @@
                 	$i = $i + 1;          
           
              } // while
+             }
           ?>     
           </tbody>
            </table>
@@ -268,13 +278,13 @@
       <table class="general-table">
       <thead>
       <tr>
-      <th class="tabheader" colspan="4">View Discount
-      			<input name="sordno" type="hidden"  value = "<?php echo $order_no; ?>">         
+      <th class="tabheader" colspan="4">View Discount         
       </th>
       </tr>
       </thead>
       <tbody>
       <?php
+      if (!empty($var_ordno)) {
         $sql = "select distinct (sptype) as disctype from salesentrydet";
         $sql .= " Where sordno ='".$var_ordno."'";
       
@@ -312,7 +322,7 @@
           
           }
         }
-      
+      }
       ?>      
       
       </tbody>      

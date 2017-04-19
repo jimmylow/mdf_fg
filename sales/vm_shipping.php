@@ -17,8 +17,12 @@
       $var_ordno = $_GET['shipno'];
       $var_menucode = $_GET['menucd'];
       include("../Setting/ChqAuth.php");
-
     }
+    
+    if ($_POST['btnGet'] == "Get" && !empty($_POST['sordno'])) {
+    	$var_ordno= $_POST['sordno'];
+    }
+    
     if (isset($_POST['Submit'])){ 
      if ($_POST['Submit'] == "Print") {
         $pdordno = $_POST['sordno'];
@@ -77,18 +81,24 @@
 <!--  <?php include("../sidebarm.php"); ?> -->
 
   <?php
+  if (!empty($var_ordno)) {
   	 $sql = "select * from salesshipmas";
      $sql .= " where shipno ='".$var_ordno."'";
      $sql_result = mysql_query($sql);
      $row = mysql_fetch_array($sql_result);
-
+     $num=mysql_numrows($sql_result);
+     if ($num==0) {
+     	echo "<script>";
+     	echo "alert('Order No ".$var_ordno. " not exist at Shipping!')";
+     	echo "</script>";
+     }
+     
      $custcd = $row['scustcd'];
      $shipdte = date('d-m-Y', strtotime($row['shipdte']));
      $order_no = htmlentities($row['shipno']);
      $stype = $row['stype'];
-     $sprinted = $row['sprinted'];
-     
-     
+     $sprinted = $row['sprinted'];  
+  }
   ?> 
   
   <div class="contentc">
@@ -105,7 +115,8 @@
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="inputtxt" name="sordno" id="sordnoid" type="text" readonly style="width: 204px;" value = "<?php echo $order_no; ?>">         
+			<input class="inputtxt" name="sordno" id="sordno" type="text" style="width: 204px;" value = "<?php echo $order_no; ?>">         
+			<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >        			
 		   </td>
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px">&nbsp;</td>

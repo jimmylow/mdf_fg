@@ -245,7 +245,18 @@ jQuery(function($) {
   				
     	  	   $msgdel = "Are You Sure Delete Selected Shipping Entry?";
     	  	   include("../Setting/btndelete.php"); 
-             include("../Setting/btnpost.php");           
+               include("../Setting/btnpost.php");
+               $locatr = "vm_shipping.php?menucd=".$var_menucode;
+               if ($var_accvie != 0){
+               		echo '<input type="button" value="View" class="butsub" style="width: 60px; height: 32px" onclick="location.href=\''.$locatr.'\'" >';
+               }
+               $locatr = "upd_shipping.php?menucd=".$var_menucode;
+               if ($var_accupd != 0){
+               		echo '<input type="button" value="Edit" class="butsub" style="width: 60px; height: 32px" onclick="location.href=\''.$locatr.'\'" >';
+               }
+               $locatr = "m_ship_mas.php?menucd=".$var_menucode;
+               echo '<input type="submit" name="btnListing" id="btnListing" value="Listing" class="butsub" style="width: 60px; height: 32px">';
+                
             /*
     	  	   $msgdel = "Are You Sure Delete Selected Shipping Entry?";
     	  	   if ($var_accdel == 0){
@@ -297,6 +308,7 @@ jQuery(function($) {
          </thead>
 		 <tbody>
 		 <?php 
+		 if ($_POST['btnListing'] == "Listing") {
 		    $sql = "SELECT shipno, shipdte, scustcd, sprinted, stat, doflg, invflg, posted ";
 		    $sql .= " FROM salesshipmas";
     		$sql .= " ORDER BY shipno desc, stat";  
@@ -405,6 +417,7 @@ jQuery(function($) {
            		echo '</tr>';
             $numi = $numi + 1;
 			}
+		 }
 		 ?>
 		 </tbody>
 		 </table>

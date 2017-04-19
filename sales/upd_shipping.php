@@ -20,6 +20,10 @@
 
     }
     
+    if ($_POST['btnGet'] == "Get" && !empty($_POST['sordno'])) {
+    	$var_ordno= $_POST['sordno'];
+    }
+    
     if ($_POST['Submit'] == "Update") {
       
     //phpinfo();
@@ -245,7 +249,11 @@ function getXMLHTTP() { //fuction to return the xml http object
 
 function validateForm()
 {
-
+  var btnGet=document.forms["InpPO"]["btnGet"].value;
+  if (btnGet!=null || btnGet=="Get") {
+	return true;
+  }
+	
   var x=document.forms["InpPO"]["sacustcd"].value;
 	if (x==null || x=="s")
 	{
@@ -457,18 +465,32 @@ xmlhttp.send();
 <!--  <?php include("../sidebarm.php"); ?> -->
 
   <?php
+  if (!empty($var_ordno)) {
   	 $sql = "select * from salesshipmas";
      $sql .= " where shipno ='".$var_ordno."'";
      $sql_result = mysql_query($sql);
      $row = mysql_fetch_array($sql_result);
-
-     $custcd = $row['scustcd'];
-     $shipdte = date('d-m-Y', strtotime($row['shipdte']));
-     $order_no = htmlentities($row['shipno']);
-     $stype = $row['stype'];
-     $sprinted = $row['sprinted'];
+     $num=mysql_numrows($sql_result);
+     if ($num==0) {
+     	echo "<script>";
+     	echo "alert('Order No ".$var_ordno. " not exist at Shipping!')";
+     	echo "</script>";
+     }
      
-     
+     if ($row['posted'] == "Y" || $row['stat'] == "C" ){
+     	echo "<script>";
+     	echo "alert('This Shipment Is Posted / Cancelled; Edit Is Not Allow')";
+     	echo "</script>";
+     	$var_ordno = "";
+     }
+     else {
+	     $custcd = $row['scustcd'];
+	     $shipdte = date('d-m-Y', strtotime($row['shipdte']));
+	     $order_no = htmlentities($row['shipno']);
+	     $stype = $row['stype'];
+	     $sprinted = $row['sprinted'];
+     }
+  }
   ?> 
   
   <div class="contentc">
@@ -485,7 +507,8 @@ xmlhttp.send();
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="textnoentry" name="sordno" id="sordnoid" type="text" readonly style="width: 204px;" value = "<?php echo $order_no; ?>">         
+			<input class="inputtxt" name="sordno" id="sordno" type="text" style="width: 204px;" value = "<?php echo $order_no; ?>">         
+		   	<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >        		   	
 		   </td>
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px">&nbsp;</td>
@@ -524,7 +547,6 @@ xmlhttp.send();
 			<td style="width: 284px">
 		   <input class="inputtxt" name="shipdte" id ="shipdte" type="text" style="width: 128px;" value="<?php  echo $shipdte; ?>">
 		   <img alt="Date Selection" src="../images/cal.gif" onclick="javascript:NewCssCal('shipdte','ddMMyyyy')" style="cursor:pointer"></td>
-		   </td>
 	  	  </tr>  
 	  	  <tr>
 	  	   <td style="width: 13px"></td>
@@ -636,8 +658,8 @@ xmlhttp.send();
                 <td>
 				<input name="prococode[]" class="tInput" id="prococode<?php echo $i; ?>" tabindex="0" style="border-style: none; border-color: inherit; width: 161px" onchange ="upperCase(this.id)" value ="<?php echo htmlentities($rowq['sprocd']); ?>" readonly></td>
                 <td>
-				<input name="procouom[]" id="procouom<?php echo $i; ?>" class="tInput" readonly="readonly" style="border-style: none; border-color: inherit; border-width: 0; width: 60px" value ="<?php echo $rowq['sprouom']; ?>"></td>
-        <input name="procouqty[]" value="<?php echo $var_uqty; ?>" id="procouqty<?php echo $i; ?>" type="hidden"></td>                
+				<input name="procouom[]" id="procouom<?php echo $i; ?>" class="tInput" readonly="readonly" style="border-style: none; border-color: inherit; border-width: 0; width: 60px" value ="<?php echo $rowq['sprouom']; ?>">
+        		<input name="procouqty[]" value="<?php echo $var_uqty; ?>" id="procouqty<?php echo $i; ?>" type="hidden"></td>                
                 <td>
 				<input name="procoqty[]" id="procoqty<?php echo $i; ?>" style="border-style :none; width: 48px; text-align : right" value ="<?php echo $rowq['sproqty']; ?>" readonly></td>
                 <td>
@@ -676,8 +698,8 @@ xmlhttp.send();
                 <td>
 				<input name="prococode[]" class="tInput" id="prococode<?php echo $i; ?>" tabindex="0" style="width: 161px" onchange ="upperCase(this.id)" value ="<?php echo htmlentities($rowq['sprocd']); ?>" readonly></td>
                 <td>
-				<input name="procouom[]" id="procouom<?php echo $i; ?>" class="tInput" readonly="readonly" style="border-style: none; border-color: inherit; border-width: 0; width: 60px" value ="<?php echo $rowq['sprouom']; ?>"></td>
-        <input name="procouqty[]" value="<?php echo $var_uqty; ?>" id="procouqty<?php echo $i; ?>" type="hidden"></td>
+				<input name="procouom[]" id="procouom<?php echo $i; ?>" class="tInput" readonly="readonly" style="border-style: none; border-color: inherit; border-width: 0; width: 60px" value ="<?php echo $rowq['sprouom']; ?>">
+        		<input name="procouqty[]" value="<?php echo $var_uqty; ?>" id="procouqty<?php echo $i; ?>" type="hidden"></td>
                 <td>
 				<input name="procoqty[]" id="procoqty<?php echo $i; ?>" style="border-style :none; width: 48px; text-align : right" value ="<?php echo $rowq['sproqty']; ?>" readonly></td>
                 <td>

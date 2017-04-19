@@ -20,6 +20,10 @@
 
     }
     
+    if ($_POST['btnGet'] == "Get" && !empty($_POST['dono'])) {
+    	$var_dono = $_POST['dono'];
+    }
+    
     if ($_POST['Submit'] == "Update") {
       
     //phpinfo();
@@ -144,6 +148,11 @@ function getXMLHTTP() { //fuction to return the xml http object
 function validateForm()
 {
 
+	var btnGet=document.forms["InpPO"]["btnGet"].value;
+	if (btnGet!=null || btnGet=="Get") {
+		return true;
+	}
+	  
    var x=document.forms["InpPO"]["dodte"].value;
 	if (x==null || x=="")
 	{
@@ -171,12 +180,25 @@ function validateForm()
 <!--  <?php include("../sidebarm.php"); ?> -->
 
   <?php
-  
-  	 $sql = "select delorddte, sordno, mthyr from salesdo";
+  if (!empty($var_dono)) {
+  	 $sql = "select delorddte, sordno, mthyr, stat from salesdo";
      $sql .= " where delordno ='".$var_dono."'";
      $sql_result = mysql_query($sql);
      $row = mysql_fetch_array($sql_result);
+     $num=mysql_numrows($sql_result);
+     if ($num==0) {
+     	echo "<script>";
+     	echo "alert('Delivery Order No ".$var_dono. " does not exist!')";
+     	echo "</script>";
+     }
      
+     if ($row['stat'] == "C"){
+     	echo "<script>";
+     	echo "alert('This DO is Cancelled; Edit Is Not Allow')";
+     	echo "</script>";
+     	$var_dono = "";
+     }
+     else {
      $dodte = date('d-m-Y', strtotime($row['delorddte']));
      $var_ordno = $row['sordno'];
      $mthyr = $row['mthyr'];
@@ -187,7 +209,9 @@ function validateForm()
      $row = mysql_fetch_array($sql_result);
 
      $shipdte = date('d-m-Y', strtotime($row['shipdte']));
+     }
      
+  }  
      
   ?> 
   
@@ -212,7 +236,6 @@ function validateForm()
 		   <td>:</td>
 		   <td style="width: 284px">
 		   <input class="inputtxt" name="shipdte" id ="shipdte" type="text" style="width: 128px;" value="<?php  echo $shipdte; ?>" readonly></td>       
-		   </td>
 	  	  </tr>
 
 	   	   <tr>
@@ -220,7 +243,8 @@ function validateForm()
 	  	   <td style="width: 122px">DO No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="inputtxt" name="dono" id="donoid" type="text" readonly style="width: 204px;" value = "<?php echo $var_dono; ?>">                  
+			<input class="inputtxt" name="dono" id="donoid" type="text" style="width: 204px;" value = "<?php echo $var_dono; ?>">
+			<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >                  
 		   </td>
 			<td style="width: 10px"></td>
 			<td style="width: 204px">DO Date</td>
@@ -228,7 +252,6 @@ function validateForm()
 			<td style="width: 284px">
 		   <input class="inputtxt" name="dodte" id ="dodte" type="text" style="width: 128px;" value="<?php echo $dodte; ?>">
 		   <img alt="Date Selection" src="../images/cal.gif" onclick="javascript:NewCssCal('dodte','ddMMyyyy')" style="cursor:pointer"></td>
-		   </td>
 	  	  </tr> 
 	   	   <tr>
 	  	   <td style="width: 13px"></td>

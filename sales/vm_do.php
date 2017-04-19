@@ -20,6 +20,10 @@
 
     }
     
+    if ($_POST['btnGet'] == "Get" && !empty($_POST['dono'])) {
+    	$var_dono= $_POST['dono'];
+    }
+    
     if (isset($_POST['Submit'])){ 
      if ($_POST['Submit'] == "Print") {
         $pdono = $_POST['dono'];
@@ -114,14 +118,13 @@
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="inputtxt" name="sordno" id="sordnoid" type="text" readonly style="width: 204px;" value = "<?php echo $var_ordno; ?>">         
+			<input class="inputtxt" name="sordno" id="sordno" type="text" readonly style="width: 204px;" value = "<?php echo $var_ordno; ?>">			         
 		   </td>
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px">Shipping Date</td>
 		   <td>:</td>
 		   <td style="width: 284px">
 		   <input class="inputtxt" name="shipdte" id ="shipdte" type="text" style="width: 128px;" value="<?php  echo $shipdte; ?>" readonly></td>       
-		   </td>
 	  	  </tr>
 
 	   	   <tr>
@@ -129,7 +132,8 @@
 	  	   <td style="width: 122px">DO No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="inputtxt" name="dono" id="donoid" type="text" readonly style="width: 204px;" value = "<?php echo $var_dono; ?>" >                  
+			<input class="inputtxt" name="dono" id="donoid" type="text" style="width: 204px;" value = "<?php echo $var_dono; ?>" >
+			<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >                  
 		   </td>
 			<td style="width: 10px"></td>
 			<td style="width: 204px">DO Date</td>

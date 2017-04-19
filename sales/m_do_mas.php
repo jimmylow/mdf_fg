@@ -179,6 +179,16 @@ jQuery(function($) {
   				}else{
    					echo '<input type=submit name = "Submit" value="Cancel" class="butsub" style="width: 60px; height: 32px" onclick="return confirm(\''.$msgdel.'\')">';
   				}
+  				$locatr = "vm_do.php?menucd=".$var_menucode;
+  				if ($var_accvie != 0){
+  					echo '<input type="button" value="View" class="butsub" style="width: 60px; height: 32px" onclick="location.href=\''.$locatr.'\'" >';
+  				}
+  				$locatr = "upd_do.php?menucd=".$var_menucode;
+  				if ($var_accupd != 0){
+  					echo '<input type="button" value="Edit" class="butsub" style="width: 60px; height: 32px" onclick="location.href=\''.$locatr.'\'" >';
+  				}
+  				$locatr = "m_do_mas.php?menucd=".$var_menucode;
+  				echo '<input type="submit" name="btnListing" id="btnListing" value="Listing" class="butsub" style="width: 60px; height: 32px">';
   				
           /*
 			   $msgdel = "Are You Sure Active Selected DO Entry?";
@@ -187,7 +197,7 @@ jQuery(function($) {
   				}else{
    					echo '<input type=submit name = "Submit" value="Active" class="butsub" style="width: 60px; height: 32px" onclick="return confirm(\''.$msgdel.'\')">';
   				} */
-
+				
     	      ?></td>
 		 </tr>
 		 </table>
@@ -222,10 +232,11 @@ jQuery(function($) {
          </thead>
 		 <tbody>
 		 <?php 
+		 if ($_POST['btnListing'] == "Listing") {
 		    $sql = "SELECT x.delordno, x.delorddte, x.sordno, x.stat, y.shipdte ";
 		    $sql .= " FROM salesdo x, salesshipmas y";
-        $sql .= " where y.shipno = x.sordno";
-        $sql .= " and y.stat = 'A'";
+        	$sql .= " where y.shipno = x.sordno";
+        	$sql .= " and y.stat = 'A'";
     		$sql .= " ORDER BY x.delordno desc, x.stat";  
 			$rs_result = mysql_query($sql); 
 	
@@ -288,6 +299,7 @@ jQuery(function($) {
            		echo '</tr>';
             $numi = $numi + 1;
 			}
+		 }
 		 ?>
 		 </tbody>
 		 </table>

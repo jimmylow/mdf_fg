@@ -20,7 +20,7 @@
 
     }
     
-    if ($_POST['Submit'] == "Get" && !empty($_POST['sordno'])) {
+    if ($_POST['btnGet'] == "Get" && !empty($_POST['sordno'])) {
     	$var_ordno= $_POST['sordno'];
     }
     
@@ -443,7 +443,11 @@ function getXMLHTTP() { //fuction to return the xml http object
 
 function validateForm2()
 { 
- 
+  var btnGet=document.forms["InpPO2"]["btnGet"].value;
+	if (btnGet!=null || btnGet=="Get") {
+		return true;
+	}
+	  
   var x=document.forms["InpPO2"]["sacustcd"].value;
 	if (x==null || x=="s")
 	{
@@ -454,9 +458,9 @@ function validateForm2()
     var x=document.forms["InpPO2"]["saorddte"].value;
 	if (x==null || x=="")
 	{
-	//alert("Order Date Must Not Be Blank");
-	//document.getElementById("saorddte").focus();
-	//return false;
+	alert("Order Date Must Not Be Blank");
+	document.getElementById("saorddte").focus();
+	return false;
 	}
 }
 
@@ -549,9 +553,7 @@ function get_totpcs ( ) {
      	echo "</script>";
      }
      
-     $shipflg = $row['shipflg'];
-     
-     if ($shipflg=="Y") {
+      if ($row['shipflg']=="Y") {
      	echo "<script>";
      	echo "alert('Order No ".$var_ordno. " Shipment Is Created; Edit Is Not Allow')";
      	echo "</script>";
@@ -590,8 +592,8 @@ function get_totpcs ( ) {
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="textnoentry" name="sordno" id="sordno" type="text" style="width: 150px;" value = "<?php echo $order_no; ?>"> 
-			<input type=submit name = "Submit" value="Get" class="butsub" style="width: 60px; height: 32px" >        
+			<input class="inputtxt" name="sordno" id="sordno" type="text" style="width: 150px;" value = "<?php echo $order_no; ?>"> 
+			<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >        
 		   </td>
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px">&nbsp;</td>

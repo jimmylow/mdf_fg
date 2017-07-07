@@ -358,6 +358,31 @@ function showhide(oCheckbox, vtabno)
                      	echo '<td align="center"><input type="checkbox" name="menucdde[]" id= "mmenudeid" value="'.$row['menu_code'].'" DISABLED '.$varchk1de.'/>'.'</td>';
                    		} 
                 	    echo '</tr>';
+                	    
+                	    if ($row['menu_name'] == "Product Master") {
+                	        $sql1 = "select accessr";
+                	        $sql1 .= " from progauth";
+                	        $sql1 .= " where username ='".$procdf."'";
+                	        $sql1 .= " and program_name ='PRODUCTM01'";
+                	        
+                	        $sql_result1 = mysql_query($sql1);
+                	        $row1 = mysql_fetch_array($sql_result1);
+                	        $prochkac = $row1[0];
+                	        
+                	        if ($prochkac == 1){
+                	            $varchk1ac = 'checked';
+                	        }else{
+                	            $varchk1ac = "";
+                	        }
+                	        
+                	        echo '<tr class="toggleable" style="display:none">';
+                	        echo '<td style="width: 401px; font-weight:bold; color:red;">------>Allow Edit Cost Price</td>';
+                	        echo '<td style="width: 36px" align="center"></td>';
+                	        echo '<td align="center" style="width: 82px"><input type="checkbox" name="menucdac[]" id= "mmenuacid" value="PRODUCTM01" DISABLED '.$varchk1ac.'/>'.'</td>';
+                	        echo '<td></td><td></td><td></td><td></td>';
+                	        echo '</tr>';
+                	    }
+                	    
 						// call this function again to display this 
     			    	// child's children 
     				    display_childrenuser($row['menu_code'], $level+1, $procdf); 

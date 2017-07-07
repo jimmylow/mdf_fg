@@ -18,6 +18,15 @@
 	  $var_menucode1 = $_GET['menucd'];
     }
     
+    // Get Permission Allow edit cost price
+    $sql = "select accessr from progauth ";
+    $sql .= " where program_name ='PRODUCTM01'";
+    $sql .= " and username ='".$var_loginid."'";
+    
+    $sql_result = mysql_query($sql);
+    $row = mysql_fetch_array($sql_result);
+    $allow_edit_cost = $row[0];
+        
     if ($_POST['Submit'] == "Back") {
          $var_menucode1  = $_POST['menucd'];
          $backloc = "../main_mas/m_prod_mas.php?menucd=".$var_menucode1;
@@ -533,8 +542,13 @@ function decision(msg)
        ?>
 		   </select> 
           </td>
-          <td><input class="inputtxt" name="expri" id ="expriid" type="text" maxlength="50" onchange ="upperCase(this.id)" style="width: 80px" value="<?php echo $expri; ?>"></td>
-          <!-- <td><input class="inputtxt" name="exdoz" id ="exdozid" type="text" maxlength="50" onchange ="upperCase(this.id)" style="width: 80px" value="<?php //echo $exdoz; ?>"></td> -->
+          <td>
+          <?php if ($allow_edit_cost == 1) { ?>
+          	<input class="inputtxt" name="expri" id ="expriid" type="text" maxlength="50" onchange ="upperCase(this.id)" style="width: 80px" value="<?php echo $expri; ?>"/>              
+          <?php } else { ?>
+          	<input class="textnoentry" readonly name="expri" id ="expriid" type="text" maxlength="50" onchange ="upperCase(this.id)" style="width: 80px" value="<?php echo $expri; ?>"/>
+          </td>
+          <?php } ?>
           </tr>
           </table>
           </td>

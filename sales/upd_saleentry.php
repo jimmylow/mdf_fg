@@ -443,12 +443,7 @@ function getXMLHTTP() { //fuction to return the xml http object
 
 function validateForm2()
 { 
-  var btnGet=document.forms["InpPO2"]["btnGet"].value;
-	if (btnGet!=null || btnGet=="Get") {
-		return true;
-	}
-	  
-  var x=document.forms["InpPO2"]["sacustcd"].value;
+ 	var x=document.forms["InpPO2"]["sacustcd"].value;
 	if (x==null || x=="s")
 	{
 	alert("Customer Must Not Be Blank");
@@ -583,25 +578,27 @@ function get_totpcs ( ) {
 	<fieldset name="Group1" style=" width: 900px;" class="style2">
 	 <legend class="title">UPDATE SALES ENTRY</legend>
 	  <br>	 
-	  
-	  <form name="InpPO2" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?menucd='.$var_menucode; ?>" onsubmit="return validateForm2()">
-	   
-		<table style="width: 900px; font-family : verdana, helvetica; font-size : 12px;">
+	  	<form name="GET" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?menucd='.$var_menucode; ?>">			
+	  	<table style="width: 900px; font-family : verdana, helvetica; font-size : 12px;">
 		  <tr>
 	  	   <td style="width: 13px"></td>
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
-	  	   <td style="width: 201px">
-			<input class="inputtxt" name="sordno" id="sordno" type="text" style="width: 150px;" value = "<?php echo $order_no; ?>"> 
-			<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >        
+	  	   <td style="width: 295px">
+	  	   	<input class="inputtxt" name="sordno" id="sordno" type="text" style="width: 150px;" value = "<?php echo $order_no; ?>"> 
+			<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >			      
 		   </td>
-		   <td style="width: 10px"></td>
-		   <td style="width: 204px">&nbsp;</td>
-		   <td>&nbsp;</td>
-		   <td style="width: 284px">
-		   &nbsp;</td>
+		    <td style="width: 10px"></td>
+			<td style="width: 204px"></td>
+			<td style="width: 16px"></td>
+			<td style="width: 284px">		   
 	  	  </tr>
-
+		</table>
+		</form>
+		  
+		<form name="InpPO2" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?menucd='.$var_menucode; ?>" onsubmit="return validateForm2()">
+		<input name="sordno" type="hidden"  value = "<?php echo $order_no; ?>"> 
+		<table style="width: 900px; font-family : verdana, helvetica; font-size : 12px;">	    	 
 	   	   <tr>
 	  	   <td style="width: 13px"></td>
 	  	   <td style="width: 122px">Customer</td>
@@ -688,6 +685,7 @@ function get_totpcs ( ) {
 		  <br><br>
       </form>
 	  <form name="InpPO" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?menucd='.$var_menucode; ?>" onsubmit="return validateForm()">
+	  <input name="sordno" type="hidden"  value = "<?php echo $order_no; ?>">         
 		  <table id="itemsTable" style="width: 900px; padding : 6px; font-family : verdana, helvetica; font-size : 12px;">
           	 <tr>      
           	<thead>

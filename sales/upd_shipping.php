@@ -248,12 +248,7 @@ function getXMLHTTP() { //fuction to return the xml http object
 }
 
 function validateForm()
-{
-  var btnGet=document.forms["InpPO"]["btnGet"].value;
-  if (btnGet!=null || btnGet=="Get") {
-	return true;
-  }
-	
+{ 
   var x=document.forms["InpPO"]["sacustcd"].value;
 	if (x==null || x=="s")
 	{
@@ -499,14 +494,13 @@ xmlhttp.send();
 	 <legend class="title">UPDATE SHIPPING ENTRY</legend>
 	  <br>	 
 	  
-	  <form name="InpPO" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?menucd='.$var_menucode; ?>" onsubmit="return validateForm()">
-	   
+	  <form name="Get" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?menucd='.$var_menucode; ?>">	   
 		<table style="width: 993px; ">
 		  <tr>
 	  	   <td style="width: 13px"></td>
 	  	   <td style="width: 122px">Order No</td>
 	  	   <td style="width: 13px">:</td>
-	  	   <td style="width: 201px">
+	  	   <td style="width: 295px">
 			<input class="inputtxt" name="sordno" id="sordno" type="text" style="width: 204px;" value = "<?php echo $order_no; ?>">         
 		   	<input type="submit" name="btnGet" value="Get" class="butsub" style="width: 60px; height: 32px" >        		   	
 		   </td>
@@ -516,7 +510,12 @@ xmlhttp.send();
 		   <td style="width: 284px">
 		   &nbsp;</td>
 	  	  </tr>
-
+	  	</table>
+	  	</form>
+	  	
+ 		<form name="InpPO" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?menucd='.$var_menucode; ?>" onsubmit="return validateForm()">
+ 		<input name="sordno" type="hidden"  value = "<?php echo $order_no; ?>">
+ 		<table style="width: 993px; ">
 	   	   <tr>
 	  	   <td style="width: 13px"></td>
 	  	   <td style="width: 122px">Customer</td>

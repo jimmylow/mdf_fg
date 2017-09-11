@@ -195,21 +195,7 @@ jQuery(function($) {
 		 </table>
 		 <br>
 		 <table cellpadding="0" cellspacing="0" id="example" class="display" width="100%">
-         <thead>
-           <tr>
-          <th></th>
-          <th style="width: 234px">Sales No</th>
-          <th style="width: 129px">Counter</th>
-          <th style="width: 128px">MM/YY</th>
-          <th style="width: 124px">Period</th>
-          <th>Invoice</th>
-          <th>Status</th>
-          <th></th>
-          <th></th>
-		  <th></th>
-		  <th></th>
-         </tr>
-
+         <thead>        
          <tr>
           <th class="tabheader" style="width: 12px">#</th>
           <th class="tabheader" style="width: 129px">Sales No.</th>
@@ -217,7 +203,8 @@ jQuery(function($) {
           <th class="tabheader" style="width: 128px">MM/YY</th>
           <th class="tabheader" style="width: 124px">Period</th>
           <th class="tabheader" style="width: 124px">Invoice</th>
-          <th class="tabheader" style="width: 124px">Status</th>
+          <th class="tabheader" style="width: 200px">GRN</th>
+          <th class="tabheader" style="width: 50px">Status</th>
           <th class="tabheader" style="width: 12px">Detail</th>
           <th class="tabheader" style="width: 12px">Update</th>
 		  <th class="tabheader" style="width: 12px">Cancel</th>
@@ -226,7 +213,7 @@ jQuery(function($) {
          </thead>
 		 <tbody>
 		 <?php 
-		    $sql = "SELECT sordno, sorddte, scustcd, smthyr, speriod, stat ";
+		    $sql = "SELECT sordno, sorddte, scustcd, smthyr, speriod, stat, grn_no, grn_date ";
 		    $sql .= " FROM csalesmas";
         $sql .= " where year(sorddte) between ".$var_fyear." and ".$var_tyear;   //--- additional add in for select data faster - 02/05/2016        
     		$sql .= " ORDER BY sordno desc";  
@@ -282,6 +269,7 @@ jQuery(function($) {
             	}
 
             	//-----------------------------------------------//
+            	echo '<td>'.$rowq['grn_no'].'</td>';
             	echo '<td>'.$rowq['stat'].'</td>';
             
             	if ($var_accvie == 0){

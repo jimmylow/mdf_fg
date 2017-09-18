@@ -88,7 +88,7 @@
         
 				$sql = "INSERT INTO csalesmas values 
 						('$var_invno', '$vmorddte','$vmcustcd','$vmmthyr','$vmperiod', '$vmlesstype', '$vmlessamt', 
-						 '$var_loginid','$vartoday','$var_loginid', '$vartoday', 'A')";
+						 '$var_loginid','$vartoday','$var_loginid', '$vartoday', 'A', '', '')";
 				mysql_query($sql) or die ("Cant insert : ".mysql_error());
 				
 				if(!empty($_POST['prococode']) && is_array($_POST['prococode'])) 
@@ -159,7 +159,7 @@
   
  if ($vmorddte == "") { $vmorddte = date("d-m-Y"); }  
  if ($vmmthyr == "") { $vmmthyr = date("m/Y"); }  
-    
+ if ($vmlessamt == "") { $vmlessamt = "0.00"; }
 ?>
 
 

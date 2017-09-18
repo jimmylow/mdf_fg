@@ -23,13 +23,13 @@
     
     if ($_POST['Submit'] == "Update") {
     
-   	$vmordno   = $_POST['sordno'];
+   	    $vmordno   = $_POST['sordno'];
 		$vmorddte = date('Y-m-d', strtotime($_POST['saorddte']));
 		$vmcustcd = $_POST['sacustcd'];
 		$vmmthyr  = $_POST['samthyr'];
 		$vmperiod = $_POST['speriod'];
-    $vmlessamt = $_POST['lessamt'];  
-    $vmlesstype = $_POST['lesstype'];           
+        $vmlessamt = $_POST['lessamt'];  
+        $vmlesstype = $_POST['lesstype'];           
             
 		if ($vmordno <> "") {
     			
@@ -37,7 +37,7 @@
         
 				//$sql = "Update csalesmas Set scustcd = '$vmcustcd', sorddte ='$vmorddte', ";
 				$sql = "Update csalesmas Set sorddte ='$vmorddte', ";
-        $sql .= " less_type = '$vmlesstype', less_amt = '$vmlessamt', ";
+                $sql .= " less_type = '$vmlesstype', less_amt = '$vmlessamt', ";
 				$sql .= " smthyr = '$vmmthyr', speriod = '$vmperiod', ";
 				$sql .= " modified_by = '$var_loginid', modified_on='$vartoday ' ";
 				$sql .= " Where sordno ='$vmordno'";
@@ -924,8 +924,9 @@ function getbal (str) {
               
               $var_salesamt = 0;
               $var_salesamt = number_format($rowq['soldqty'] * $rowq['sprounipri'], 2, '.', ',');  
+              $begbal = $rowq['endbal'];
               
-             if($domthyr <> "") {
+             /* if($domthyr <> "") {
 
                 $sql2 = " SELECT SUM(x.sproqty) as tot FROM salesentrydet x, salesentry y";
                 $sql2 .= " WHERE y.scustcd = '".$custcd."'";
@@ -944,7 +945,7 @@ function getbal (str) {
                    if($doqty =="") { $doqty = 0; }
                  }
                  
-                $sql2 = " SELECT endbal FROM csalesdet x, csalesmas y ";
+                /* $sql2 = " SELECT endbal FROM csalesdet x, csalesmas y ";
                 $sql2 .= " WHERE y.scustcd = '".$custcd."'";
                 $sql2 .= " AND y.smthyr = '".$prevmthyr."'";
                 $sql2 .= " AND x.sordno = y.sordno";
@@ -957,13 +958,13 @@ function getbal (str) {
                    $rst2 = mysql_fetch_object($tmp2);
                    $begbal = $rst2->endbal; 
                    if($begbal =="") { $begbal = 0; }
-                 } else { $begbal = 0; }
+                 } else { $begbal = 0; } */
                  
                  
-               } else {
+               /*} else {
                    $doqty = 0; 
                    $begbal = 0;
-               }
+               } */
                              
                                           
              ?>            
@@ -1136,4 +1137,7 @@ function getbal (str) {
 	<div class="spacer"></div>
 </body>
 
+<script type="text/javascript">
+getTotalAmt();
+</script>
 </html>

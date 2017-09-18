@@ -118,6 +118,7 @@ $(document).ready(function() {
     					null,
     					null,
     					null,
+    					null,
     					null
     				]
 	})
@@ -132,6 +133,8 @@ $(document).ready(function() {
 				     { type: "text" },
 				     { type: "text" },
 				     { type: "text" },
+				     { type: "text" },
+				     null,
 				     null,
 				     null,
 				     null
@@ -195,7 +198,21 @@ jQuery(function($) {
 		 </table>
 		 <br>
 		 <table cellpadding="0" cellspacing="0" id="example" class="display" width="100%">
-         <thead>        
+         <thead>      
+          <tr>
+          <th></th>
+          <th style="width: 234px">Sales No</th>
+          <th style="width: 129px">Counter</th>
+          <th style="width: 128px">MM/YY</th>
+          <th style="width: 124px">Period</th>
+          <th>Invoice</th>
+          <th>GRN</th>
+          <th>Status</th>
+          <th></th>
+          <th></th>
+		  <th></th>
+		  <th></th>
+         </tr>       
          <tr>
           <th class="tabheader" style="width: 12px">#</th>
           <th class="tabheader" style="width: 129px">Sales No.</th>
@@ -213,9 +230,13 @@ jQuery(function($) {
          </thead>
 		 <tbody>
 		 <?php 
-		    $sql = "SELECT sordno, sorddte, scustcd, smthyr, speriod, stat, grn_no, grn_date ";
-		    $sql .= " FROM csalesmas";
-        $sql .= " where year(sorddte) between ".$var_fyear." and ".$var_tyear;   //--- additional add in for select data faster - 02/05/2016        
+		    $sql = "SELECT sordno, sorddte, scustcd, smthyr, speriod, c.stat, grn_no, grn_date, cust.name, cinv.invno ";
+		    $sql .= " FROM csalesmas c";
+		    $sql .= " LEFT JOIN customer_master cust";
+		    $sql .= " ON cust.custno = c.scustcd";
+		    $sql .= " LEFT JOIN cinvoicemas cinv";		    
+		    $sql .= " ON c.smthyr = cinv.mthyr AND c.scustcd = cinv.custcd";
+            $sql .= " where year(sorddte) between ".$var_fyear." and ".$var_tyear;   //--- additional add in for select data faster - 02/05/2016        
     		$sql .= " ORDER BY sordno desc";  
 			$rs_result = mysql_query($sql); 
 	
@@ -231,7 +252,7 @@ jQuery(function($) {
 				$urlvieinv = 'vm_invoice.php';
 				//$urlvie = 'ship_mas.php';
         
-        $sqlcust = "select name from customer_master";
+        /* $sqlcust = "select name from customer_master";
         $sqlcust .= " where custno = '".$rowq['scustcd']."'";   
         $custcd = $rowq['scustcd']; 
 
@@ -241,17 +262,26 @@ jQuery(function($) {
         if (mysql_numrows($tmpcust) >0) {
           $rstcust = mysql_fetch_object($tmpcust);
           $var_cname = $rstcust->name;
-        } else { $var_cname = $rowq['scustcd']; }
+        } else { $var_cname = $rowq['scustcd']; } */
         
-        $sqlinv = "select invno FROM csalesmas, cinvoicemas ";
+				$var_cname = $rowq['name'];
+				if (is_null($var_cname)) {
+				    $var_cname = $rowq['scustcd'];
+				}
+				
+        /* $sqlinv = "select invno FROM csalesmas, cinvoicemas ";
         $sqlinv .= " WHERE smthyr = mthyr AND scustcd = custcd "; 
         $sqlinv .= " AND sordno = '".$salorno."'";
 		$rs_result2 = mysql_query($sqlinv); 
 			//echo $sql;
 			while ($rowy = mysql_fetch_assoc($rs_result2)) { 			
 				$invno = htmlentities($rowy['invno']);
-			}
-
+			} */
+                
+				$invno = $rowq['invno'];
+				if (is_null($invno)) {
+				    $invno = "";
+				}
 
         
 				echo '<tr>';
@@ -281,7 +311,8 @@ jQuery(function($) {
 		            echo '<td align="center"><a href="#">[EDIT]</a>';'</td>';
 	            }else{
 	            	if ($rowq['stat'] == "C"){
-	            		echo '<td align="center"><a href="#" title="This Counter Sales is Cancelled; Edit Is Not Allow">[EDIT]</a>';'</td>';
+	            		/* echo '<td align="center"><a href="#" title="This Counter Sales is Cancelled; Edit Is Not Allow">[EDIT]</a>';'</td>'; */
+	            	    echo'<td></td>';
 	            	}else{ 
 		            	echo '<td align="center">';
 						echo '<a href="'.$urlpopoldver.'?sorno='.$salorno.'&custcd='.$rowq['scustcd'].'&menucd='.$var_menucode.'">[EDIT_OLD]</a>';

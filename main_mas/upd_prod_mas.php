@@ -543,7 +543,7 @@ function decision(msg)
 		   </select> 
           </td>
           <td>
-          <?php if ($allow_edit_cost == 1) { ?>
+          <?php if ($allow_edit_cost == 1 || $expri == '0') { ?>
           	<input class="inputtxt" name="expri" id ="expriid" type="text" maxlength="50" onchange ="upperCase(this.id)" style="width: 80px" value="<?php echo $expri; ?>"/>              
           <?php } else { ?>
           	<input class="textnoentry" readonly name="expri" id ="expriid" type="text" maxlength="50" onchange ="upperCase(this.id)" style="width: 80px" value="<?php echo $expri; ?>"/>

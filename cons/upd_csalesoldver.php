@@ -275,6 +275,179 @@
         
         echo "<script language=\"javascript\">window.open('".$dest."','name','height=1000,width=1000,left=200,top=200');</script>";
     }
+    
+    if ($_POST['printdo'] == "Print Delivery Order") {
+        $dono = $_POST['dono'];
+        $dodate = $_POST['dodate'];
+        
+        #----------------------------------------------------------
+        $sql = "Delete from tmpinvform where usernm = '$var_loginid'";
+        mysql_query($sql) or die ("Cant Delete 1 : ".mysql_error());
+        $sql = "Delete from tmpinvformtot where username = '$var_loginid'";
+        mysql_query($sql) or die ("Cant Delete 2 : ".mysql_error());
+        
+        //$sqlu = "update csalesmas set grn_no = '$grnno' where sordno = '$var_ordno'";
+        //mysql_query($sqlu) or die ("Cant Update 3 : ".mysql_error());
+        
+        //$sqlu = "update csalesmas set grn_date = '$grndate' where sordno = '$var_ordno'";
+        //mysql_query($sqlu) or die ("Cant Update 3 : ".mysql_error());
+        
+        $sql = "select scustcd from csalesmas where sordno = '$var_ordno'";
+        $sql_result = mysql_query($sql);
+        $row = mysql_fetch_array($sql_result);
+        $custcode = mysql_real_escape_string($row['scustcd']);
+        
+        $sql1 = "select * from csalesdet where endbal > 0 and sordno = '$var_ordno'";
+        $rs_result1 = mysql_query($sql1);
+        while ($rowq1 = mysql_fetch_assoc($rs_result1)){
+            $spro = htmlentities($rowq1['sprocd']);
+            $suni = $rowq1['sprounipri'];
+            $sqty = $rowq1['endbal'];
+            
+            $sql2 = "select sprounipri, sptype from salesentrydet where sordno = '$sord' and sprocd = '$spro'";
+            $sql_result2 = mysql_query($sql2);
+            $row2 = mysql_fetch_array($sql_result2);
+            $suni2 = htmlentities($row2['sprounipri']);
+            $ssty = htmlentities($row2['sptype']);
+            
+            if(empty($sqty)){$sqty = 0;}
+            if(empty($suni)){$suni = 0;}
+            $samt = $suni * $sqty;
+            
+            $sql2 = "select description, exunit from product where groupcode = '$spro'";
+            $sql_result2 = mysql_query($sql2);
+            $row2 = mysql_fetch_array($sql_result2);
+            $spde = mysql_real_escape_string($row2['description']);
+            $suom = htmlentities($row2['exunit']);
+            
+            $sql3 = "select salestype_desc from salestype_master where salestype_code = '$ssty'";
+            $sql_result3 = mysql_query($sql3);
+            $row3 = mysql_fetch_array($sql_result3);
+            $sstde = htmlentities($row3['salestype_desc']);
+            
+            $sql4 = "select disctype, discamt from salesentrydisct where sordno = '$sord' and sptype = '$ssty'";
+            $sql_result4 = mysql_query($sql4);
+            $row4 = mysql_fetch_array($sql_result4);
+            $disctyp = htmlentities($row4['disctype']);
+            $discamt = htmlentities($row4['discamt']);
+            if(empty($discamt)){$discamt = 0;}
+            
+            if ($disctyp == ''){
+                $disdes = "Discount";
+            }else{
+                if ($disctyp == '1'){
+                    $disdes = "Discount (%)";
+                }else{
+                    $disdes = "Discount (RM)";
+                }
+            }
+            
+            if (!empty($spro)){
+                $sqli  = "insert into tmpinvform values ('$spro', '$spde', '$sqty', '$suom', '$suni', ";
+                $sqli .= "        '$samt', '$ssty', '$sstde', '$discamt', '$disctyp', '$var_loginid', '$disdes', '0')";
+                //echo $sqli."<br>";
+                mysql_query($sqli) or die ("Cant Insert 1 : ".mysql_error());
+            }
+        }
+        
+        #----------------------------------------------------------
+        $sql = "select distinct salestyp, stypdisv, stypcat from tmpinvform where usernm = '$var_loginid'";
+        $rs_result = mysql_query($sql);
+        while ($rowq = mysql_fetch_assoc($rs_result)){
+            $styp    = htmlentities($rowq['salestyp']);
+            $stypdis = htmlentities($rowq['stypdisv']);
+            $scat    = htmlentities($rowq['stypcat']);
+            
+            if (empty($scat)){
+                $sqli  = "update tmpinvform set netstypdisv = '0' ";
+                $sqli .= " where salestyp = '$styp' and usernm = '$var_loginid'";
+                mysql_query($sqli) or die ("Cant Update 1 : ".mysql_error());
+            }else{
+                if ($scat == '2'){
+                    $sqli  = "update tmpinvform set netstypdisv = '$stypdis' ";
+                    $sqli .= " where salestyp = '$styp' and usernm = '$var_loginid'";
+                    mysql_query($sqli) or die ("Cant Update 2 : ".mysql_error());
+                }else{
+                    $sqldd  = "select sum(amt) from tmpinvform where salestyp = '$styp' and usernm = '$var_loginid'";
+                    $sql_resultdd = mysql_query($sqldd);
+                    $rowdd = mysql_fetch_array($sql_resultdd);
+                    $dsalestypc = htmlentities($rowdd['sum(amt)']);
+                    
+                    $discamt = $dsalestypc * ($stypdis / 100);
+                    $sqli  = "update tmpinvform set netstypdisv = '$discamt' ";
+                    $sqli .= " where salestyp = '$styp' and usernm = '$var_loginid'";
+                    mysql_query($sqli) or die ("Cant Update 3 : ".mysql_error());
+                }
+            }
+        }
+        //$sqldd  = "select discount, sec_disct, add_deduction, freight, transport, gst from invmas where invno = '$pinvno'";
+        //$sql_resultdd = mysql_query($sqldd);
+        //$rowdd = mysql_fetch_array($sql_resultdd);
+        $fdis    = 0;//$rowdd['discount'];
+        $secdis  = 0;//$rowdd['sec_disct'];
+        $deduper = 0;//$rowdd['add_deduction'];
+        $frie    = 0;//$rowdd['freight'];
+        $trans   = 0;//$rowdd['transport'];
+        $gstper  = 0;//$rowdd['gst'];
+        if (empty($fdis)){$fdis = 0;}
+        if (empty($secdis)){$secdis = 0;}
+        if (empty($deduper)){$deduper = 0;}
+        if (empty($frie)){$frie = 0;}
+        if (empty($trans)){$trans = 0;}
+        if (empty($gstper)){$gstper = 0;}
+        
+        $sqldd  = "select sum(amt) from tmpinvform where usernm = '$var_loginid'";
+        $sql_resultdd = mysql_query($sqldd);
+        $rowdd = mysql_fetch_array($sql_resultdd);
+        $sumamt = htmlentities($rowdd['sum(amt)']);
+        if (empty($sumamt)){$sumamt = 0;}
+        
+        $sqldd  = "select sum(distinct netstypdisv) from tmpinvform where usernm = '$var_loginid' and netstypdisv <> 0";
+        $sql_resultdd = mysql_query($sqldd);
+        $rowdd = mysql_fetch_array($sql_resultdd);
+        $disamt = htmlentities($rowdd['sum(distinct netstypdisv)']);
+        if (empty($disamt)){$disamt = 0;}
+        
+        $netamt = $sumamt - $disamt;
+        $gamt = $netamt;
+        if ($fdis <> 0){
+            $fdisamt = ($fdis /100) * $netamt;
+            $netamt = $netamt - $fdisamt;
+        }
+        if (empty($fdisamt)){$fdisamt = 0;}
+        if($secdis <> 0){
+            $sdisamt = ($secdis /100) * $netamt;
+            $netamt = $netamt - $sdisamt;
+        }
+        if (empty($sdisamt)){$sdisamt = 0;}
+        if ($deduper <> 0){
+            $deduamt = ($deduper /100) * $netamt;
+            $netamt = $netamt - $deduamt;
+        }
+        if (empty($deduamt )){$deduamt  = 0;}
+        if ($frie <> 0){
+            $netamt = $netamt + $frie;
+        }
+        if ($trans <> 0){
+            $netamt = $netamt + $trans;
+        }
+        $gstamt = $gstper * $netamt / 100;
+        $netamt = $netamt + $gstamt;
+        $sqli  = "insert into tmpinvformtot values ('$gamt', '$var_loginid', '$fdis', '$fdisamt', '$secdis',";
+        $sqli .= " '$sdisamt', '$deduper', '$deduamt', '$frie', '$trans', '$gstper', '$gstamt', '$netamt')";
+        mysql_query($sqli) or die ("Cant Update 3 : ".mysql_error());
+        
+        $sqldd  = "select apphea_txt from apphea_set";
+        $sql_resultdd = mysql_query($sqldd);
+        $rowdd = mysql_fetch_array($sql_resultdd);
+        $comphea = htmlentities($rowdd['apphea_txt']);
+        $fname = "deliveryorder.rptdesign&__title=myReport";
+        
+        $dest = "http://".$var_prtserver.":8080/birtfg/frameset?__report=".$fname."&grnno=".$dono."&grndate=".$dodate."&custcode=".$custcode."&menuc=".$var_menucode."&dbsel=".$varrpturldb."&usernm=".$var_loginid;
+        $dest .= urlencode(realpath($fname));
+        
+        echo "<script language=\"javascript\">window.open('".$dest."','name','height=1000,width=1000,left=200,top=200');</script>";
+    }
  /*   
   //----------- get special authority ------------------//
   $sqlauth = " select * from progauth";
@@ -524,6 +697,26 @@ function validateGRN()
 	{
 	alert("GRN Date Must Not Be Blank");
 	document.printgrn.grndate.focus;
+	return false;
+	}
+}
+
+function validateDO()
+{
+
+  var x=document.forms["printdo"]["dono"].value;
+	if (x==null || x=="")
+	{
+    	alert("DO no Not Be Blank");
+    	document.printdo.dono.focus;
+    	return false;
+	}
+
+   var x=document.forms["printdo"]["dodate"].value;
+	if (x==null || x=="")
+	{
+	alert("DO Must Not Be Blank");
+	document.printdo.dodate.focus;
 	return false;
 	}
 }
@@ -1127,6 +1320,31 @@ function getbal (str) {
         	  	<tr>
         	  		<td align="center" colspan="6">
         	  			<input type="Submit" name="printgrn" value="Print Goods Return Note" required class="butsub" style="height: 32px";
+        	  		</td>
+        	  	</tr>    			
+    	  	</table>
+    		</form>	
+	   </fieldset>
+	   <fieldset name="Group2">
+    	 <legend class="title">DELIVERY ORDER</legend>
+    		<form name="printdo" method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?sorno='.$var_ordno.'&menucd='.$var_menucode; ?>" onsubmit="return validateDO()">
+    	  	<table style="width: 993px; ">
+    			<tr>
+        	  	   <td style="width: 13px"></td>
+        	  	   <td style="width: 122px">DO No: </td>
+        	  	   <td style="width: 201px">
+        				<input name="dono" id="dono" type="text" required style="width: 204px;" value = "<?php echo $dono; ?>">         
+        		   </td>
+        		   <td style="width: 10px"></td>
+        		   <td style="width: 204px">DO Date: </td>
+        		   <td style="width: 284px">
+        		   		<input name="dodate" id ="dodate" type="text" required style="width: 128px;" value="<?php  echo $dodate ?>">
+    		   			<img alt="Date Selection" src="../images/cal.gif" onclick="javascript:NewCssCal('dodate','ddMMyyyy')" style="cursor:pointer">			
+        		   </td>
+        	  	</tr>
+        	  	<tr>
+        	  		<td align="center" colspan="6">
+        	  			<input type="Submit" name="printdo" value="Print Delivery Order" required class="butsub" style="height: 32px";
         	  		</td>
         	  	</tr>    			
     	  	</table>

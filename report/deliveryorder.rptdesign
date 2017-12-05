@@ -3386,22 +3386,22 @@ where username = ?]]></xml-property>
             <property name="footerHeight">0in</property>
             <page-header>
                 <grid id="2916">
-                    <property name="height">2.9791666666666665in</property>
+                    <property name="height">3.1041666666666665in</property>
                     <property name="width">7.6875in</property>
                     <column id="3000">
-                        <property name="width">0.3020833333333333in</property>
+                        <property name="width">0.1in</property>
                     </column>
                     <column id="2986">
-                        <property name="width">3.2708333333333335in</property>
+                        <property name="width">5.2in</property>
                     </column>
                     <column id="2917">
-                        <property name="width">2.2395833333333335in</property>
+                        <property name="width">1in</property>
                     </column>
                     <column id="3026">
                         <property name="width">0.14583333333333334in</property>
                     </column>
                     <column id="2919">
-                        <property name="width">1.7291666666666667in</property>
+                        <property name="width">1in</property>
                     </column>
                     <row id="2920">
                         <property name="height">0.21875in</property>
@@ -3457,16 +3457,77 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">customer</property>
+                                <property name="dataSet">rmkhea</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">Name</property>
-                                        <text-property name="displayName">Name</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
+                                        <property name="name">compname</property>
+                                        <text-property name="displayName">compname</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["compname"]</expression>
+                                        <property name="dataType">string</property>
+                                        <property name="allowExport">true</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">telno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["telno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">faxno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["faxno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">emailadd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["emailadd"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">homeurl</property>
+                                        <expression name="expression" type="javascript">dataSetRow["homeurl"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastlogin</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastlogin"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastupd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastupd"]</expression>
+                                        <property name="dataType">date-time</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">menucode</property>
+                                        <expression name="expression" type="javascript">dataSetRow["menucode"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">rpttitle</property>
+                                        <expression name="expression" type="javascript">dataSetRow["rpttitle"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">Name</property>
+                                <property name="resultSetColumn">compname</property>
                             </data>
                         </cell>
                     </row>
@@ -3524,16 +3585,16 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">customer</property>
+                                <property name="dataSet">rmkhea</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">Add1</property>
-                                        <text-property name="displayName">Add1</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["Add1"]</expression>
+                                        <property name="name">add_line_1</property>
+                                        <text-property name="displayName">add_line_1</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_1"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">Add1</property>
+                                <property name="resultSetColumn">add_line_1</property>
                             </data>
                         </cell>
                     </row>
@@ -3591,16 +3652,77 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">customer</property>
+                                <property name="dataSet">rmkhea</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">Add2</property>
-                                        <text-property name="displayName">Add2</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["Add2"]</expression>
+                                        <property name="name">compname</property>
+                                        <expression name="expression" type="javascript">dataSetRow["compname"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_2</property>
+                                        <text-property name="displayName">add_line_2</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_2"]</expression>
+                                        <property name="dataType">string</property>
+                                        <property name="allowExport">true</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">telno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["telno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">faxno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["faxno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">emailadd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["emailadd"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">homeurl</property>
+                                        <expression name="expression" type="javascript">dataSetRow["homeurl"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastlogin</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastlogin"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastupd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastupd"]</expression>
+                                        <property name="dataType">date-time</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">menucode</property>
+                                        <expression name="expression" type="javascript">dataSetRow["menucode"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">rpttitle</property>
+                                        <expression name="expression" type="javascript">dataSetRow["rpttitle"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">Add2</property>
+                                <property name="resultSetColumn">add_line_2</property>
                             </data>
                         </cell>
                     </row>
@@ -3658,16 +3780,77 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">customer</property>
+                                <property name="dataSet">rmkhea</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">Add3</property>
-                                        <text-property name="displayName">Add3</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["Add3"]</expression>
+                                        <property name="name">compname</property>
+                                        <expression name="expression" type="javascript">dataSetRow["compname"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_3</property>
+                                        <text-property name="displayName">add_line_3</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_3"]</expression>
+                                        <property name="dataType">string</property>
+                                        <property name="allowExport">true</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">telno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["telno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">faxno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["faxno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">emailadd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["emailadd"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">homeurl</property>
+                                        <expression name="expression" type="javascript">dataSetRow["homeurl"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastlogin</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastlogin"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastupd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastupd"]</expression>
+                                        <property name="dataType">date-time</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">menucode</property>
+                                        <expression name="expression" type="javascript">dataSetRow["menucode"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">rpttitle</property>
+                                        <expression name="expression" type="javascript">dataSetRow["rpttitle"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">Add3</property>
+                                <property name="resultSetColumn">add_line_3</property>
                             </data>
                         </cell>
                     </row>
@@ -3725,16 +3908,77 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">customer</property>
+                                <property name="dataSet">rmkhea</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">Add4</property>
-                                        <text-property name="displayName">Add4</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["Add4"]</expression>
+                                        <property name="name">compname</property>
+                                        <expression name="expression" type="javascript">dataSetRow["compname"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">telno</property>
+                                        <text-property name="displayName">telno</text-property>
+                                        <expression name="expression" type="javascript">"Tel : "+dataSetRow["telno"]+"   Fax :"+dataSetRow["faxno"]</expression>
+                                        <property name="dataType">string</property>
+                                        <property name="allowExport">true</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">faxno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["faxno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">emailadd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["emailadd"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">homeurl</property>
+                                        <expression name="expression" type="javascript">dataSetRow["homeurl"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastlogin</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastlogin"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastupd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastupd"]</expression>
+                                        <property name="dataType">date-time</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">menucode</property>
+                                        <expression name="expression" type="javascript">dataSetRow["menucode"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">rpttitle</property>
+                                        <expression name="expression" type="javascript">dataSetRow["rpttitle"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">Add4</property>
+                                <property name="resultSetColumn">telno</property>
                             </data>
                         </cell>
                     </row>
@@ -3747,12 +3991,71 @@ where username = ?]]></xml-property>
                             <data id="6027">
                                 <property name="fontWeight">bold</property>
                                 <property name="textAlign">center</property>
-                                <property name="dataSet">customer</property>
+                                <property name="dataSet">rmkhea</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
+                                        <property name="name">compname</property>
+                                        <expression name="expression" type="javascript">dataSetRow["compname"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">add_line_3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["add_line_3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">telno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["telno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">faxno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["faxno"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">emailadd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["emailadd"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">homeurl</property>
+                                        <expression name="expression" type="javascript">dataSetRow["homeurl"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastlogin</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastlogin"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">lastupd</property>
+                                        <expression name="expression" type="javascript">dataSetRow["lastupd"]</expression>
+                                        <property name="dataType">date-time</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">menucode</property>
+                                        <expression name="expression" type="javascript">dataSetRow["menucode"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">rpttitle</property>
+                                        <expression name="expression" type="javascript">dataSetRow["rpttitle"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
                                         <property name="name">gstno</property>
-                                        <text-property name="displayName">gstno</text-property>
-                                        <expression name="expression" type="javascript">"GST No: " + dataSetRow["gstno"]</expression>
+                                        <expression name="expression" type="javascript">"Email: " + dataSetRow["emailadd"]</expression>
                                         <property name="dataType">string</property>
                                         <property name="allowExport">true</property>
                                     </structure>
@@ -3816,7 +4119,7 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <text-property name="text">GOODS RETURN NOTE</text-property>
+                                <text-property name="text">Delivery Order</text-property>
                             </label>
                         </cell>
                     </row>
@@ -3831,7 +4134,7 @@ where username = ?]]></xml-property>
                     </row>
                     <row id="4023">
                         <property name="fontFamily">"Verdana"</property>
-                        <property name="height">0.20833333333333334in</property>
+                        <property name="height">0.22916666666666666in</property>
                         <cell id="4024"/>
                         <cell id="4025">
                             <data id="4010">
@@ -3883,16 +4186,45 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">rmkhea</property>
+                                <property name="dataSet">customer</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">compname</property>
-                                        <text-property name="displayName">compname</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["compname"]</expression>
+                                        <property name="name">CustNo</property>
+                                        <expression name="expression" type="javascript">dataSetRow["CustNo"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Name</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add4</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add4"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">compname</property>
+                                <property name="resultSetColumn">Name</property>
                             </data>
                         </cell>
                         <cell id="4026">
@@ -3901,7 +4233,7 @@ where username = ?]]></xml-property>
                                 <property name="fontWeight">normal</property>
                                 <property name="textAlign">right</property>
                                 <property name="contentType">auto</property>
-                                <text-property name="content"><![CDATA[GRN No  ]]></text-property>
+                                <text-property name="content"><![CDATA[DO No  ]]></text-property>
                             </text>
                         </cell>
                         <cell id="4027">
@@ -3924,7 +4256,7 @@ where username = ?]]></xml-property>
                     </row>
                     <row id="4029">
                         <property name="fontFamily">"Verdana"</property>
-                        <property name="height">0.20833333333333334in</property>
+                        <property name="height">0.22916666666666666in</property>
                         <cell id="4030"/>
                         <cell id="4031">
                             <data id="4011">
@@ -3975,16 +4307,45 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">rmkhea</property>
+                                <property name="dataSet">customer</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">add_line_1</property>
-                                        <text-property name="displayName">add_line_1</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["add_line_1"]</expression>
+                                        <property name="name">CustNo</property>
+                                        <expression name="expression" type="javascript">dataSetRow["CustNo"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Name</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add4</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add4"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">add_line_1</property>
+                                <property name="resultSetColumn">Add1</property>
                             </data>
                         </cell>
                         <cell id="4032">
@@ -4016,7 +4377,7 @@ where username = ?]]></xml-property>
                     </row>
                     <row id="4035">
                         <property name="fontFamily">"Verdana"</property>
-                        <property name="height">0.20833333333333334in</property>
+                        <property name="height">0.22916666666666666in</property>
                         <cell id="4036"/>
                         <cell id="4037">
                             <data id="4012">
@@ -4068,16 +4429,45 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">rmkhea</property>
+                                <property name="dataSet">customer</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">add_line_2</property>
-                                        <text-property name="displayName">add_line_2</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["add_line_2"]</expression>
+                                        <property name="name">CustNo</property>
+                                        <expression name="expression" type="javascript">dataSetRow["CustNo"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Name</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add4</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add4"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">add_line_2</property>
+                                <property name="resultSetColumn">Add2</property>
                             </data>
                         </cell>
                         <cell id="4038">
@@ -4134,7 +4524,7 @@ where username = ?]]></xml-property>
                     </row>
                     <row id="4041">
                         <property name="fontFamily">"Verdana"</property>
-                        <property name="height">0.20833333333333334in</property>
+                        <property name="height">0.22916666666666666in</property>
                         <cell id="4042"/>
                         <cell id="4043">
                             <data id="4013">
@@ -4186,16 +4576,45 @@ where username = ?]]></xml-property>
                                 <property name="showIfBlank">false</property>
                                 <property name="canShrink">true</property>
                                 <property name="overflow">hidden</property>
-                                <property name="dataSet">rmkhea</property>
+                                <property name="dataSet">customer</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">add_line_3</property>
-                                        <text-property name="displayName">add_line_3</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["add_line_3"]</expression>
+                                        <property name="name">CustNo</property>
+                                        <expression name="expression" type="javascript">dataSetRow["CustNo"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Name</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add4</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add4"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">add_line_3</property>
+                                <property name="resultSetColumn">Add3</property>
                             </data>
                         </cell>
                         <cell id="4044"/>
@@ -4204,22 +4623,50 @@ where username = ?]]></xml-property>
                     </row>
                     <row id="4047">
                         <property name="fontFamily">"Verdana"</property>
-                        <property name="height">0.20833333333333334in</property>
+                        <property name="height">0.22916666666666666in</property>
                         <cell id="4048"/>
                         <cell id="4049">
                             <data id="4014">
                                 <property name="textAlign">left</property>
-                                <property name="dataSet">rmkhea</property>
+                                <property name="dataSet">customer</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">telno</property>
-                                        <text-property name="displayName">telno</text-property>
-                                        <expression name="expression" type="javascript">"Tel : "+dataSetRow["telno"]+"   Fax :"+dataSetRow["faxno"]</expression>
+                                        <property name="name">CustNo</property>
+                                        <expression name="expression" type="javascript">dataSetRow["CustNo"]</expression>
                                         <property name="dataType">string</property>
-                                        <property name="allowExport">true</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Name</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add4</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add4"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">dataSetRow["gstno"]</expression>
+                                        <property name="dataType">string</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">telno</property>
+                                <property name="resultSetColumn">Add4</property>
                             </data>
                         </cell>
                         <cell id="4050"/>
@@ -4228,22 +4675,51 @@ where username = ?]]></xml-property>
                     </row>
                     <row id="5536">
                         <property name="fontFamily">"Verdana"</property>
-                        <property name="height">0.20833333333333334in</property>
+                        <property name="height">0.22916666666666666in</property>
                         <cell id="5537"/>
                         <cell id="5538">
                             <data id="4015">
                                 <property name="textAlign">left</property>
-                                <property name="dataSet">rmkhea</property>
+                                <property name="dataSet">customer</property>
                                 <list-property name="boundDataColumns">
                                     <structure>
-                                        <property name="name">emailadd</property>
-                                        <text-property name="displayName">emailadd</text-property>
-                                        <expression name="expression" type="javascript">"Email : "+dataSetRow["emailadd"]+"   HomePage : "+dataSetRow["homeurl"]</expression>
+                                        <property name="name">CustNo</property>
+                                        <expression name="expression" type="javascript">dataSetRow["CustNo"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Name</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add1</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add1"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add2</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add2"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add3</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add3"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">Add4</property>
+                                        <expression name="expression" type="javascript">dataSetRow["Add4"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <expression name="expression" type="javascript">"GST NO: " + dataSetRow["gstno"]</expression>
                                         <property name="dataType">string</property>
                                         <property name="allowExport">true</property>
                                     </structure>
                                 </list-property>
-                                <property name="resultSetColumn">emailadd</property>
+                                <property name="resultSetColumn">gstno</property>
                             </data>
                         </cell>
                         <cell id="5539"/>

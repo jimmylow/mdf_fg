@@ -586,11 +586,10 @@ function validateForm()
 	return false;
 	}
 
-  
 	//Check the list of mat item no is Valid-------------------------------------------------------------
 	var flgchk = 1;	
-	var table = document.getElementById('itemsTable');
-	var rowCount = table.rows.length;  
+	var table = document.getElementById('itemsTable'); 
+	var rowCount = table.rows.length-1;
          
     for (var j = 1; j < rowCount; j++){
        var idrowItem = "prococode"+j;
@@ -631,10 +630,8 @@ function validateForm()
 	}
     //---------------------------------------------------------------------------------------------------
 
-    
+
 	//Check the list of mat item no got duplicate item no------------------------------------------------
-	var table = document.getElementById('itemsTable');
-	var rowCount = table.rows.length;  
 	var mylist = new Array();	    
 
 	for (var j = 1; j < rowCount; j++){
@@ -658,27 +655,40 @@ function validateForm()
 	}   
 	//---------------------------------------------------------------------------------------------------
 	
-	
-	//Check input price is Valid-------------------------------------------------------
-	var table = document.getElementById('itemsTable');
-	var rowCount = table.rows.length;  
-	
-	  for (var j = 1; j < rowCount; j++){
-
-	    var idrowbook = "procoupri"+j;
+	//Check input price is Valid-------------------------------------------------------	
+      for (var j = 1; j < rowCount; j++){
+    
+        var idrowbook = "procoupri"+j;
         var rowItemc = document.getElementById(idrowbook).value;	 
         
         if (rowItemc != ""){ 
         	if(isNaN(rowItemc)) {
     	   		alert('Please Enter a valid number for Unit Price :' + rowItemc + " Line No :"+j);
-    	   		document.itemsTable.idrowbook.focus();
+    	   		//document.itemsTable.idrowbook.focus();
     	   		return false;
     	    }    
     	}
-       }		
+    }		
     //---------------------------------------------------------------------------------------------------
   
-
+	//Check balance negative-------------------------------------------------------	
+	for (var j = 1; j < rowCount; j++){
+		var idsubamt = "procobalqty"+j;
+	    var subamtobj = document.getElementById(idsubamt);
+       	if (subamtobj) {
+    		var subamt = subamtobj.value;
+    		if (subamt !== "") { 
+      			subamt = parseFloat(subamt); 
+      			if (subamt < 0) {
+    				alert('Stock bal got negative, cannot allow to update.' + ' Line No :' + j);
+        	   		//document.itemsTable.idsubamt.focus();
+        	   		return false;
+        	    }
+    		}
+    	}	
+	}		
+    //------
+    
 }
 
 function validateGRN()
@@ -876,6 +886,12 @@ function getbal (str) {
   var endbalobj = document.getElementById("procobalqty"+str);
   if (endbalobj) {
 	  endbalobj.value = endbal;
+	  if (endbalobj.value < 0) {
+		  endbalobj.style.backgroundColor = "red";
+	  }
+	  else {
+		  endbalobj.style.backgroundColor = "white";
+      }
   }
  
 }

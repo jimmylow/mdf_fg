@@ -825,37 +825,60 @@ function getbal (str) {
 
               }
           
-             	$sql = "SELECT sprocd, sprounipri, sptype, endbal FROM csalesdet";
+             	/* $sql = "SELECT sprocd, sprounipri, sptype, endbal FROM csalesdet";
              	$sql .= " Where sordno = '".$var_ordno."'"; 
-	    		    $sql .= " ORDER BY ".$var_sortby;  
-			  	    $rs_result = mysql_query($sql); 
-
-              //echo $sql; //break;
- 
+	    		$sql .= " ORDER BY ".$var_sortby;		  	   
+                $rs_result = mysql_query($sql); */
+             
+              if($domthyr <> "") {
+		  	    $sql = "SELECT cs.sprocd, sprounipri, sptype, endbal, rpt.doqty FROM csalesdet cs";
+		  	    $sql .= " LEFT JOIN (";
+	  	        $sql .= " SELECT SUM(x.sproqty) AS doqty, x.sprocd FROM salesentrydet x";
+	  	        $sql .= " INNER JOIN salesentry y ON y.sordno = x.sordno";
+	  	        $sql .= " INNER JOIN (";
+	  	        $sql .= " SELECT sordno FROM salesdo WHERE MONTH(delorddte) = ".$domth;
+  	            $sql .= " AND YEAR (delorddte) = ".$doyear;
+  	            $sql .= " ) AS sd ON sd.sordno = y.sordno";
+  	            $sql .= " WHERE y.scustcd = '".$vmcustcd."'";
+	  	        $sql .= " GROUP BY x.sprocd";
+	  	        $sql .= " ) AS rpt on rpt.sprocd = cs.sprocd";
+	  	        $sql .= " WHERE cs.sordno = '".$var_ordno."' ORDER BY ".$var_sortby;
+              } else {
+                $sql = "SELECT sprocd, sprounipri, sptype, endbal FROM csalesdet";
+                $sql .= " Where sordno = '".$var_ordno."'";
+                $sql .= " ORDER BY ".$var_sortby;	
+              }
+	  	        
+	  	        $rs_result = mysql_query($sql);
+		  	       
+	  	        if (!$rs_result){
+	  	            die('Invalid query: '.mysql_error());
+	  	        }
+	  	        
 			    $i = 1;
-				while ($rowq = mysql_fetch_assoc($rs_result)){ 
+				while ($rowq = mysql_fetch_assoc($rs_result)) { 
         
               if($domthyr <> "") {
 
-                $sql2 = " SELECT SUM(x.sproqty) as tot FROM salesentrydet x, salesentry y";
+                /* $sql2 = " SELECT SUM(x.sproqty) as tot FROM salesentrydet x, salesentry y";
                 $sql2 .= " WHERE y.scustcd = '".$vmcustcd."'";
                 $sql2 .= " AND x.sordno = y.sordno";
                 $sql2 .= " AND y.sordno IN (SELECT sordno FROM salesdo WHERE ";
                 $sql2 .= " MONTH(delorddte) = ".$domth;
                 $sql2 .= " AND YEAR (delorddte) = ".$doyear.")";
                 $sql2 .= " AND x.sprocd = '".$rowq['sprocd']."'";
-                 $sql2 .= " AND x.sordno = y.sordno";
+                 $sql2 .= " AND x.sordno = y.sordno"; */
 
                
                 
                 //echo $sql2;
-                $tmp2 = mysql_query($sql2) or die ("cant get do qty : ".mysql_error());
+               /*  $tmp2 = mysql_query($sql2) or die ("cant get do qty : ".mysql_error());
                 
                 if(mysql_numrows($tmp2) >0) {
                    $rst2 = mysql_fetch_object($tmp2);
                    $doqty = $rst2->tot; 
                    if($doqty =="") { $doqty = 0; }
-                 }
+                 } */
                 
                 /* 
                 $sql2 = " SELECT endbal FROM csalesdet x, csalesmas y ";
@@ -873,6 +896,8 @@ function getbal (str) {
                    if($begbal =="") { $begbal = 0; }
                  } else { $begbal = 0; }
                  */
+                 $doqty = $rowq['doqty'];
+                 if($doqty =="") { $doqty = 0; }
                  
                } else {
                    $doqty = 0; 

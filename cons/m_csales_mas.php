@@ -185,7 +185,7 @@ jQuery(function($) {
   				
 			   $msgdel = "Are You Sure Active Selected Sales Entry?";
     	  	   if ($var_accdel == 0){
-   					echo '<input disabled="disabled" type=button name = "Submit" value="Cancel" class="butsub" style="width: 60px; height: 32px">';
+   					echo '<input disabled="disabled" type=button name = "Submit" value="Active" class="butsub" style="width: 60px; height: 32px">';
   				}else{
    					echo '<input type=submit name = "Submit" value="Active" class="butsub" style="width: 60px; height: 32px" onclick="return confirm(\''.$msgdel.'\')">';
   				}
@@ -234,10 +234,10 @@ jQuery(function($) {
 		    $sql .= " FROM csalesmas c";
 		    $sql .= " LEFT JOIN customer_master cust";
 		    $sql .= " ON cust.custno = c.scustcd";
-		    $sql .= " LEFT JOIN cinvoicemas cinv";		    
+		    $sql .= " LEFT JOIN (SELECT mthyr, custcd, invno FROM cinvoicemas WHERE stat != 'C') as cinv";		    
 		    $sql .= " ON c.smthyr = cinv.mthyr AND c.scustcd = cinv.custcd";
             $sql .= " where year(sorddte) between ".$var_fyear." and ".$var_tyear;   //--- additional add in for select data faster - 02/05/2016        
-    		$sql .= " ORDER BY sordno desc";  
+            $sql .= " ORDER BY sordno desc";  
 			$rs_result = mysql_query($sql); 
 	
 		    $numi = 1;

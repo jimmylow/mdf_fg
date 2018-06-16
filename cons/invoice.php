@@ -549,8 +549,7 @@ function validateForm()
 	  	   <td style="width: 122px">GST %</td>
 	  	   <td style="width: 13px">:</td>
 	  	   <td style="width: 201px">
-			<input class="inputtxt" name="gst" id="gstid" type="text" maxlength="6" style="width: 60px;" value="<?php echo $vmgst; ?>" ></td>		   
-        </td>         
+			<input class="inputtxt" name="gst" id="gstid" type="text" maxlength="6" style="width: 60px;" value="<?php echo $vmgst; ?>" ></td>		           
 		   <td style="width: 10px"></td>
 		   <td style="width: 204px"></td>
 		   <td></td>

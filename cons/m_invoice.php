@@ -65,6 +65,7 @@
     
    	if ($_GET['p'] == "Print"){
    	  	$cinvnum = $_GET['sno'];
+   	  	$new = $_GET['new'];
         
         #----------------Prepare Temp Table For Printing -----------------------------------
      	$sql  = " Delete From tmpcinvtot where usernm = '$var_loginid'";
@@ -95,7 +96,10 @@
         	$var_exgstamt = $rowc['1'];
         	if (empty($sumamttyp)){$sumamttyp = 0;}
         	if (empty($var_exgstamt)){$var_exgstamt = 0;}
-
+        	if (!empty($new)) {
+        	    $var_exgstamt = $rowc['0'];
+        	}
+        	
        	#echo $var_exgstamt."<br>";
         	$rate = 0;
         	$sql1  = "select rate from cinvoicedet2";
@@ -107,7 +111,7 @@
 			if ($rate == 0){
 				$slessamt = 0;
 			}else{
-				$slessamt = $var_exgstamt * ($rate/100);
+			    $slessamt = $var_exgstamt * ($rate/100);			   
 			}
 			$snetamt = $var_exgstamt - $slessamt;
 			$lessrm = $lessrm + $slessamt;
@@ -141,14 +145,25 @@
 		if (empty($proles)){$proles = 0;}
 		if (empty($leamt)){$leamt = 0;}
 		#-------------Promotion less-----------------------------------
-		$finaltot = $netrm - $proles + $gstamt;
+		if (empty($new)) 
+		{
+		    $finaltot = $netrm - $proles + $gstamt;
+		}
+		else {
+		  $finaltot = $netrm - $proles;
+		}
 		if (empty($finaltot)){$finaltot = 0;}
 		
 		$sqli  = " Insert Into tmpcinvtot ";
    		$sqli .= " Values ('$var_loginid', '$lessrm', '$netrm', '$proles', '$lesstyp', '$leamt', '$finaltot', '$gstamt')";
    		mysql_query($sqli) or die("Unable Save In Temp Table ".mysql_error());
 
-        $fname = "cinv_rpt2.rptdesign&__title=myReport"; 
+   		if (empty($new)) {
+   		    $fname = "cinv_rpt2.rptdesign&__title=myReport";
+   		}
+   		else {
+            $fname = "cinv_rpt3.rptdesign&__title=myReport";
+   		}
         $dest = "http://".$var_prtserver.":8080/birtfg/frameset?__report=".$fname."&cinv=".$cinvnum."&menuc=".$var_menucode."&dbsel=".$varrpturldb."&usernm=".$var_loginid;
         $dest .= urlencode(realpath($fname));
         
@@ -162,7 +177,8 @@
  
 	 	if ($_GET['p'] == "Printsum"){
    	  	$cinvnum = $_GET['sno'];
-        
+   	  	$new = $_GET['new'];
+   	  	
          #----------------Prepare Temp Table For Printing -----------------------------------
      	$sql  = " Delete From tmpcinvtot where usernm = '$var_loginid'";
         mysql_query($sql) or die("Unable To Prepare Temp Table For Printing".mysql_error());
@@ -191,7 +207,9 @@
         	$var_exgstamt = $rowc['1'];
         	if (empty($sumamttyp)){$sumamttyp = 0;}
         	if (empty($var_exgstamt)){$var_exgstamt = 0;}
-
+        	if (!empty($new)) {
+        	    $var_exgstamt = $rowc['0'];
+        	}
        	#echo $var_exgstamt."<br>";
         	$rate = 0;
         	$sql1  = "select rate from cinvoicedet2";
@@ -236,15 +254,25 @@
 		if (empty($proles)){$proles = 0;}
 		if (empty($leamt)){$leamt = 0;}
 		#-------------Promotion less-----------------------------------
-		$finaltot = $netrm - $proles + $gstamt;
+		if (empty($new))
+		{
+		    $finaltot = $netrm - $proles + $gstamt;
+		}
+		else {
+		    $finaltot = $netrm - $proles;
+		}
 		if (empty($finaltot)){$finaltot = 0;}
 		
 		$sqli  = " Insert Into tmpcinvtot ";
    		$sqli .= " Values ('$var_loginid', '$lessrm', '$netrm', '$proles', '$lesstyp', '$leamt', '$finaltot', '$gstamt')";
    		mysql_query($sqli) or die("Unable Save In Temp Table ".mysql_error());
 
-        
-        $fname = "cinvsum_rpt2.rptdesign&__title=myReport"; 
+        if (empty($new)) {
+            $fname = "cinvsum_rpt2.rptdesign&__title=myReport";
+        }
+        else {
+            $fname = "cinvsum_rpt3.rptdesign&__title=myReport";
+        }
         $dest = "http://".$var_prtserver.":8080/birtfg/frameset?__report=".$fname."&cinv=".$cinvnum."&menuc=".$var_menucode."&dbsel=".$varrpturldb."&usernm=".$var_loginid;
         $dest .= urlencode(realpath($fname));
         
@@ -462,9 +490,12 @@ jQuery(function($) {
 	            	}
 	            } 
 
-            	echo '<td align="center"><a href="m_invoice.php?p=Print&sno='.$salorno.'&buycd='.$rowq['sbuycd'].'&menucd='.$var_menucode.'" title="Print Invoice"><img src="../images/b_print.png" border="0" width="16" height="16" hspace="2" alt="Duplicate Invoice" /></a></td>';
-				echo '<td align="center"><a href="m_invoice.php?p=Printsum&sno='.$salorno.'&buycd='.$rowq['sbuycd'].'&menucd='.$var_menucode.'" title="Print Summary"><img src="../images/b_print.png" border="0" width="16" height="16" hspace="2" alt="Duplicate Invoice Summary" /></a></td>';	          
-
+            	echo '<td align="center"><a href="m_invoice.php?p=Print&sno='.$salorno.'&buycd='.$rowq['sbuycd'].'&menucd='.$var_menucode.'" title="Print Invoice"><img src="../images/b_print.png" border="0" width="16" height="16" hspace="2" alt="Duplicate Invoice" /></a>';
+            	echo '<a href="m_invoice.php?p=Print&new=1&sno='.$salorno.'&buycd='.$rowq['sbuycd'].'&menucd='.$var_menucode.'" title="Print Invoice No GST"><img src="../images/b_print.png" border="0" width="16" height="16" hspace="2" alt="Duplicate Invoice" /></a></td>';
+            	
+				echo '<td align="center"><a href="m_invoice.php?p=Printsum&sno='.$salorno.'&buycd='.$rowq['sbuycd'].'&menucd='.$var_menucode.'" title="Print Summary"><img src="../images/b_print.png" border="0" width="16" height="16" hspace="2" alt="Duplicate Invoice Summary" /></a>';	          
+				echo '<a href="m_invoice.php?p=Printsum&new=1&sno='.$salorno.'&buycd='.$rowq['sbuycd'].'&menucd='.$var_menucode.'" title="Print Summary No GST"><img src="../images/b_print.png" border="0" width="16" height="16" hspace="2" alt="Duplicate Invoice Summary" /></a></td>';
+				
 	            if ($var_accdel == 0){
 	              echo '<td align="center"><input type="checkbox" DISABLED  name="procd[]" value="'.$values.'" />'.'</td>';
 	            }else{

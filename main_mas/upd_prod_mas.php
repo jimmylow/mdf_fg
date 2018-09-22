@@ -445,11 +445,17 @@ function decision(msg)
              echo ">".$row['salestype_code']." - ".$row['salestype_desc']."</option>";
            }
          }
+		 
+		 $query = "trainee";
+		 $cannotPrice = "";
+		 if (substr(strtolower($var_loginid), 0, strlen($query)) === $query) {
+			$cannotPrice = "disabled";
+		 }
        ?>
 		   </select>          
           </td>
           <td colspan="4">
-          <input type=submit name = "Submit" value="Price" class="butsub" style="width: 60px; height: 32px" >
+		  <input type=submit name = "Submit" value="Price" class="butsub" style="width: 60px; height: 32px" <?php echo $cannotPrice; ?>>
           <input type=submit name = "Submit" value="SKU" class="butsub" style="width: 60px; height: 32px" > 
           <input type=submit name = "Submit" value="Quantity" class="butsub" style="width: 90px; height: 32px" >          
           </td>

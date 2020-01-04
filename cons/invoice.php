@@ -673,7 +673,7 @@ function validateForm()
              
              //$var_totqty = $var_uqty * $row2['soldqty']; 
              $var_totqty = $row2['soldqty']; 			 
-             $var_currtype = $row2['sptype'];             
+             $var_currtype = trim($row2['sptype']);             
               
              //echo "Amt : ".$var_amt." sub : ".$var_subamt;
               
@@ -815,7 +815,7 @@ function validateForm()
              echo '<td colspan="3"></td>';
              echo '</tr>';           
              
-             $var_prevtype = $row2['sptype'];
+             $var_prevtype = trim($row2['sptype']);
              
             } //while ($row2 
             

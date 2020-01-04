@@ -5,7 +5,7 @@
     $return_arr = array();
     $param = $_GET["term"];
 
-    $fetch = mysql_query("SELECT productcode, exunit, description, exfacprice FROM product WHERE productcode REGEXP '^$param' and status = 'A' LIMIT 10");
+    $fetch = mysql_query("SELECT productcode, exunit, description, exfacprice FROM product WHERE productcode REGEXP '^$param' and status = 'A' ORDER BY productcode LIMIT 10");
 
     /* Retrieve and store in array the results of the query.*/
     while ($row = mysql_fetch_array($fetch, MYSQL_ASSOC)) {

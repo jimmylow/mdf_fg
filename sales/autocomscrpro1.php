@@ -3,7 +3,7 @@
 	include("../Setting/Connection.php");
 
  
-	$query = mysql_query("SELECT prod_code, prod_desc FROM pro_cd_master Where actvty != 'Z'");
+	$query = mysql_query("SELECT prod_code, prod_desc FROM pro_cd_master Where actvty != 'Z' order by prod_code");
 	$results = array();
 	while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
    		$results[] = $row;

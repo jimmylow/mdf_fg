@@ -4,7 +4,10 @@
 
 //** Current version: 3.02 See changelog.txt for details
 var root = location.protocol + '//' + location.host;
-    root = root+"/nl_fg/";
+var res =  window.location.pathname.split("/");
+var path = res[1];
+    root = root+"/" + path + "/";
+
 var downpicp = root+"css/arrow-down.gif"; 
 var rightpicp = root+"css/arrow-right.gif";    
   

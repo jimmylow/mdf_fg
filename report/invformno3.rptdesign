@@ -4014,6 +4014,29 @@ where username = ?]]></xml-property>
                             </data>
                         </cell>
                     </row>
+                    <row id="5542">
+                        <property name="fontFamily">"Verdana"</property>
+                        <cell id="5543">
+                            <property name="colSpan">5</property>
+                            <property name="rowSpan">1</property>
+                            <data id="6014">
+                                <property name="fontSize">12pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="textAlign">center</property>
+                                <property name="dataSet">rmkhea</property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">gstno</property>
+                                        <text-property name="displayName">gstno</text-property>
+                                        <expression name="expression" type="javascript">"GST ID No : "+dataSetRow["gstno"]</expression>
+                                        <property name="dataType">string</property>
+                                        <property name="allowExport">true</property>
+                                    </structure>
+                                </list-property>
+                                <property name="resultSetColumn">gstno</property>
+                            </data>
+                        </cell>
+                    </row>
                     <row id="3484">
                         <property name="fontFamily">"Verdana"</property>
                         <cell id="3485">
@@ -4262,6 +4285,22 @@ where username = ?]]></xml-property>
                     <row id="5536">
                         <property name="fontFamily">"Verdana"</property>
                         <cell id="5537"/>
+                        <cell id="5538">
+                            <data id="5999">
+                                <property name="fontFamily">sans-serif</property>
+                                <property name="dataSet">Data Set</property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">customer::gstno</property>
+                                        <text-property name="displayName">customer::gstno</text-property>
+                                        <expression name="expression" type="javascript">"GST ID No :"+dataSetRow["customer::gstno"]</expression>
+                                        <property name="dataType">string</property>
+                                        <property name="allowExport">true</property>
+                                    </structure>
+                                </list-property>
+                                <property name="resultSetColumn">customer::gstno</property>
+                            </data>
+                        </cell>
                         <cell id="5539"/>
                         <cell id="5540"/>
                         <cell id="5541"/>

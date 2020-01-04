@@ -233,11 +233,16 @@ jQuery(function($) {
 		 <tbody>
 		 <?php 
 		 if ($_POST['btnListing'] == "Listing") {
-		    $sql = "SELECT x.delordno, x.delorddte, x.sordno, x.stat, y.shipdte ";
+		    /* $sql = "SELECT x.delordno, x.delorddte, x.sordno, x.stat, y.shipdte ";
 		    $sql .= " FROM salesdo x, salesshipmas y";
         	$sql .= " where y.shipno = x.sordno";
         	$sql .= " and y.stat = 'A'";
-    		$sql .= " ORDER BY x.delordno desc, x.stat";  
+    		$sql .= " ORDER BY x.delordno desc, x.stat";   */
+		    $sql = "SELECT x.delordno, x.delorddte, x.sordno, x.stat, y.shipdte";
+		    $sql .= " FROM salesdo x";
+		    $sql .= " INNER JOIN (";
+		    $sql .= "  SELECT shipno, shipdte FROM salesshipmas WHERE stat = 'A'";
+		    $sql .= "  ) AS y ON y.shipno = x.sordno";
 			$rs_result = mysql_query($sql); 
 	
 		    $numi = 1;

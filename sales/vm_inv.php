@@ -343,6 +343,179 @@
      }
     }
 
+ 	   if (isset($_POST['Submit'])){ 
+     if ($_POST['Submit'] == "Print SST") {
+          
+        $pinvno = $_POST['sinvno'];
+        
+        #----------------------------------------------------------
+        $sql = "Delete from tmpinvform where usernm = '$var_loginid'";
+        mysql_query($sql) or die ("Cant Delete 1 : ".mysql_error());
+		$sql = "Delete from tmpinvformtot where username = '$var_loginid'";
+        mysql_query($sql) or die ("Cant Delete 1 : ".mysql_error());
+
+		$sql = "select sordno from invdet where invno = '$pinvno'";
+		$rs_result = mysql_query($sql);
+		$print = 0;
+		while ($rowq = mysql_fetch_assoc($rs_result)){ 
+		    $sord = htmlentities($rowq['sordno']);
+		   
+			$sql1 = "select * from salesshipdet where shipno = '$sord'";
+			$rs_result1 = mysql_query($sql1);
+			while ($rowq1 = mysql_fetch_assoc($rs_result1)){
+				$spro = htmlentities($rowq1['sprocd']);
+				$sqty = $rowq1['sproqty'];
+				$suom = htmlentities($rowq1['sprouom']);
+				$sseq = $rowq1['sproseq'];
+				
+				$sql2 = "select sprounipri, sptype from salesentrydet where sordno = '$sord' and sprocd = '$spro'";
+     			$sql_result2 = mysql_query($sql2);
+     			$row2 = mysql_fetch_array($sql_result2);
+     			$suni = htmlentities($row2['sprounipri']);
+     			$ssty = htmlentities($row2['sptype']);
+
+				if(empty($sqty)){$sqty = 0;}
+				if(empty($suni)){$suni = 0;}
+				$samt = $suni * $sqty;
+				 
+				$sql2 = "select Description, Category from product where ProductCode = '$spro'";
+     			$sql_result2 = mysql_query($sql2);
+     			$row2 = mysql_fetch_array($sql_result2);
+     			$spde = mysql_real_escape_string($row2['Description']);
+     			$cat_code = mysql_real_escape_string($row2['Category']);
+     			    			      			
+     			$sql3 = "select category_code, category_desc from category_master where category_code = '$cat_code'";
+     			$sql_result3 = mysql_query($sql3);
+     			$row3 = mysql_fetch_array($sql_result3);
+     			$cat_code = htmlentities($row3['category_code']);
+     			$cat_desc = htmlentities($row3['category_desc']);
+     			
+				if ($netstypdisv='' or $netstypdisv=' ' or $netstypdisv==NULL){
+					$netstypdisv = 0;
+				}
+
+				if (!empty($spro)){
+					$sqli  = "insert into tmpinvform values ('$spro', '$spde', '$sqty', '$suom', '$suni', ";
+					$sqli .= "        '$samt', '$cat_code', '$cat_desc', '0.00', '$disctyp', '$var_loginid', '$disdes', '$netstypdisv')";
+					//mysql_query($sqli) or die ("Cant Insert 1 : ".mysql_error());  
+					mysql_query($sqli) or die("Error Insert into tmpinvform  Table : ".mysql_error(). ' Failed SQL is --> '. $sqli);	 	        
+				}
+			}
+		}
+        #----------------------------------------------------------
+		$sql = "select distinct salestyp, stypdisv, stypcat from tmpinvform where usernm = '$var_loginid'";
+		$rs_result = mysql_query($sql);
+		while ($rowq = mysql_fetch_assoc($rs_result)){ 
+		    $styp    = htmlentities($rowq['salestyp']);
+		    $stypdis = htmlentities($rowq['stypdisv']);
+		    $scat    = htmlentities($rowq['stypcat']);
+		    
+		    if (empty($scat)){
+		    	$sqli  = "update tmpinvform set netstypdisv = '0' ";
+				$sqli .= " where salestyp = '$styp' and usernm = '$var_loginid'";
+				mysql_query($sqli) or die ("Cant Update 1 : ".mysql_error()); 	 
+			}else{
+				if ($scat == '2'){
+					$sqli  = "update tmpinvform set netstypdisv = '$stypdis' ";
+					$sqli .= " where salestyp = '$styp' and usernm = '$var_loginid'";
+					mysql_query($sqli) or die ("Cant Update 2 : ".mysql_error()); 	
+				}else{
+					$sqldd  = "select sum(amt) from tmpinvform where salestyp = '$styp' and usernm = '$var_loginid'";
+					$sql_resultdd = mysql_query($sqldd);
+     				$rowdd = mysql_fetch_array($sql_resultdd);
+     				$dsalestypc = htmlentities($rowdd['sum(amt)']);
+					
+					$discamt = $dsalestypc * ($stypdis / 100);
+					$sqli  = "update tmpinvform set netstypdisv = '$discamt' ";
+					$sqli .= " where salestyp = '$styp' and usernm = '$var_loginid'";
+					mysql_query($sqli) or die ("Cant Update 3 : ".mysql_error());				
+				}
+			}  
+		}
+		$sqldd  = "select discount, sec_disct, add_deduction, freight, transport, gst from invmas where invno = '$pinvno'";
+		$sql_resultdd = mysql_query($sqldd);
+     	$rowdd = mysql_fetch_array($sql_resultdd);
+     	$fdis    = $rowdd['discount'];
+		$secdis  = $rowdd['sec_disct'];
+		$deduper = $rowdd['add_deduction'];
+		$frie    = $rowdd['freight'];
+		$trans   = $rowdd['transport'];
+		$gstper  = $rowdd['gst'];
+		if (empty($fdis)){$fdis = 0;}
+		if (empty($secdis)){$secdis = 0;}
+		if (empty($deduper)){$deduper = 0;}
+		if (empty($frie)){$frie = 0;}
+		if (empty($trans)){$trans = 0;}
+		if (empty($gstper)){$gstper = 0;}
+		
+		$sqldd  = "select sum(amt) from tmpinvform where usernm = '$var_loginid'";
+		$sql_resultdd = mysql_query($sqldd);
+     	$rowdd = mysql_fetch_array($sql_resultdd);
+     	$sumamt = htmlentities($rowdd['sum(amt)']);
+		if (empty($sumamt)){$sumamt = 0;}
+		
+		$sqldd  = "select sum(distinct netstypdisv) from tmpinvform where usernm = '$var_loginid' and netstypdisv <> 0";
+		$sql_resultdd = mysql_query($sqldd);
+     	$rowdd = mysql_fetch_array($sql_resultdd);
+     	$disamt = htmlentities($rowdd['sum(distinct netstypdisv)']);
+		if (empty($disamt)){$disamt = 0;}
+		
+		$netamt = $sumamt - $disamt;
+		$gamt = $netamt;
+		if ($fdis <> 0){
+			$fdisamt = ($fdis /100) * $netamt;
+			$netamt = $netamt - $fdisamt;
+		}
+		if (empty($fdisamt)){$fdisamt = 0;}
+		if($secdis <> 0){ 		
+			$sdisamt = ($secdis /100) * $netamt;
+			$netamt = $netamt - $sdisamt;
+		}
+		if (empty($sdisamt)){$sdisamt = 0;}
+		if ($deduper <> 0){		
+			$deduamt = ($deduper /100) * $netamt;
+			$netamt = $netamt - $deduamt;
+		}
+		if (empty($deduamt )){$deduamt  = 0;}
+		if ($frie <> 0){
+			$netamt = $netamt + $frie;
+		}
+		if ($trans <> 0){	
+			$netamt = $netamt + $trans;
+		}
+		
+		$gstamt = $gstper * $netamt / 100;
+		$netamt = $netamt + $gstamt;
+		$sqli  = "insert into tmpinvformtot values ('$gamt', '$var_loginid', '$fdis', '$fdisamt', '$secdis',";
+		$sqli .= " '$sdisamt', '$deduper', '$deduamt', '$frie', '$trans', '$gstper', '$gstamt', '$netamt')";
+		mysql_query($sqli) or die ("Cant Update 3 : ".mysql_error());
+		
+        $sqldd  = "select apphea_txt from apphea_set";
+		$sql_resultdd = mysql_query($sqldd);
+     	$rowdd = mysql_fetch_array($sql_resultdd);
+     	$comphea = htmlentities($rowdd['apphea_txt']);
+
+		if ($comphea == 'SPRINGICE'){
+			$fname = "invform.rptdesign&__title=myReport";
+		}else{ 
+        	$fname = "invformno2.rptdesign&__title=myReport";
+        } 
+        $dest = "http://".$var_prtserver.":8080/birtfg/frameset?__report=".$fname."&invn=".$pinvno."&menuc=".$var_menucode."&dbsel=".$varrpturldb."&usernm=".$var_loginid;
+        $dest .= urlencode(realpath($fname));
+
+        
+        //header("Location: $dest" );
+        echo "<script language=\"javascript\">window.open('".$dest."','name','height=1000,width=1000,left=200,top=200');</script>";
+        $backloc = "../sales/vm_inv.php?ino=".$pinvno."&menucd=".$var_menucode;
+       	echo "<script>";
+       	echo 'location.replace("'.$backloc.'")';
+        echo "</script>"; 
+
+     }
+    }
+
+
+
     
 ?>
 
@@ -561,7 +734,8 @@
      				echo '<input type=submit name = "Submit" value="Print Custom" disabled="disabled" class="butsub" style="width: 100; height: 32px">';
   				 }else{
     				echo '<input type=submit name = "Submit" value="Print Custom" class="butsub" style="width: 100px; height: 32px">';
-  				 } 
+  				 }
+  				 echo '<input type=submit name = "Submit" value="Print SST" class="butsub" style="width: 100px; height: 32px">'; 
 				?>
 				</td>
 			</tr>

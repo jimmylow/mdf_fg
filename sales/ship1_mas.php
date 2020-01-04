@@ -453,7 +453,7 @@ xmlhttp.onreadystatechange=function()
     {
       //alert (xmlhttp.responseText);
       var onhand = xmlhttp.responseText;
-      if(parseInt(onhand) < parseInt(ordqty)) { alert ("Insufficient Balance : "+onhand); }     
+      if(parseInt(onhand) < parseInt(ordqty)) { alert (iteminfo+" Insufficient Balance : "+onhand); }     
     }
   }
 xmlhttp.open("GET","getonhand.php?i="+iteminfo+"&m="+rand,true);
